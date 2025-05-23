@@ -5,24 +5,31 @@ import { useState } from "react";
 
 interface NavBarProps {
   dark?: boolean;
+  setDark?: (v: boolean) => void;
 }
 
 function NavBar({ dark = true }: NavBarProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className={`w-full py-2 border-t border-b ${dark ? "bg-[#1B2A5B] border-[#22306b]" : "bg-white border-blue-200"}`}>
-      {/* Botón hamburguesa solo visible en pantallas pequeñas */}
-      <div className="flex justify-end md:hidden px-4">
-        <button
-          aria-label="Abrir menú"
-          className="focus:outline-none"
-          onClick={() => setOpen(!open)}
-        >
-          <span className="block w-6 h-0.5 bg-current mb-1"></span>
-          <span className="block w-6 h-0.5 bg-current mb-1"></span>
-          <span className="block w-6 h-0.5 bg-current"></span>
-        </button>
+    <nav className={`w-full border-t border-b ${dark ? "bg-[#1B2A5B] border-[#22306b]" : "bg-white border-blue-200"}`}>
+      <div className="flex items-center justify-between px-4">
+        {/* Logo izquierdo */}
+        <div className="flex-1 flex items-center">
+          {/* ...logo izquierdo si tienes... */}
+        </div>
+        {/* Botón hamburguesa solo en móvil */}
+        <div className="md:hidden">
+          <button
+            aria-label="Abrir menú"
+            className="focus:outline-none"
+            onClick={() => setOpen(!open)}
+          >
+            <span className="block w-6 h-0.5 bg-current mb-1"></span>
+            <span className="block w-6 h-0.5 bg-current mb-1"></span>
+            <span className="block w-6 h-0.5 bg-current"></span>
+          </button>
+        </div>
       </div>
       <ul
         className={`
