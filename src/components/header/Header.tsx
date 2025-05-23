@@ -45,7 +45,7 @@ function Header({ dark = true }: HeaderProps) {
       {/* Logo izquierda */}
       <div className="flex-shrink-0 w-20 h-20 rounded-full bg-[#232b45] shadow-lg overflow-hidden flex items-center justify-center border-4 border-[#22306b]">
         <Image
-          src="/logo-girardot.png"
+          src="/Logo.png"
           alt="Mercado Comunitario Girardot"
           width={80}
           height={80}
@@ -67,7 +67,7 @@ function Header({ dark = true }: HeaderProps) {
       {/* Logo derecha */}
       <div className="flex-shrink-0 w-20 h-20 rounded-full bg-[#232b45] shadow-lg overflow-hidden flex items-center justify-center border-4 border-[#22306b]">
         <Image
-          src="/logo-rosablanca.png"
+          src="/LogoJac.png"
           alt="Corporación Social Rosa Blanca"
           width={80}
           height={80}
