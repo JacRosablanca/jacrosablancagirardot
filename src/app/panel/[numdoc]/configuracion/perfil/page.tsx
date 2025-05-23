@@ -1,38 +1,22 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import usuarios from "@/datos/usuarios.json";
+import { useState } from "react";
+import Link from "next/link";
 
-export default function PanelUsuario() {
+export default function PerfilUsuario() {
 	const params = useParams();
-	const router = useRouter();
 	const numdoc = params?.numdoc
 		? Array.isArray(params.numdoc)
 			? params.numdoc[0]
 			: params.numdoc
 		: "";
 
-	// Buscar usuario por numdoc
 	const usuario = Array.isArray(usuarios)
 		? usuarios.find((u) => String((u as { numdoc: string }).numdoc) === String(numdoc))
 		: undefined;
-
-	// Verificar sesión al cargar
-	useEffect(() => {
-		const sesionAbierta = typeof window !== "undefined" && localStorage.getItem("sesion_numdoc");
-		if (!sesionAbierta || sesionAbierta !== numdoc) {
-			router.replace("/ingresar");
-		}
-	}, [numdoc, router]);
-
-	function cerrarSesion() {
-		if (typeof window !== "undefined") {
-			localStorage.removeItem("sesion_numdoc");
-		}
-		router.replace("/ingresar");
-	}
 
 	const [sidebarAbierto, setSidebarAbierto] = useState(false);
 	const [submenu, setSubmenu] = useState<string | null>(null);
@@ -46,16 +30,15 @@ export default function PanelUsuario() {
 	}
 
 	return (
-		<div className="bg-[#141a2e] text-white min-h-screen flex flex-col transition-colors duration-500">
+		<div className="bg-[#141a2e] text-white min-h-screen flex flex-col">
 			<Header dark={true} />
 			<div className="flex flex-1 min-h-0 relative w-full">
 				{/* Botón flotante para abrir el sidebar */}
 				{!sidebarAbierto && (
 					<button
 						onClick={toggleSidebar}
-						className="fixed top-24 left-4 z-[100] bg-[#232a47] text-yellow-400 p-2 rounded-full shadow-lg hover:bg-[#1a2140] transition"
+						className="fixed top-24 left-4 z-40 bg-[#232a47] text-yellow-400 p-2 rounded-full shadow-lg hover:bg-[#1a2140] transition"
 						title="Abrir menú"
-						style={{ transition: "z-index 0s" }}
 					>
 						<svg width="28" height="28" fill="none" viewBox="0 0 24 24">
 							<rect x="4" y="6" width="16" height="2" rx="1" fill="currentColor"/>
@@ -66,10 +49,10 @@ export default function PanelUsuario() {
 				)}
 				{/* Sidebar moderno */}
 				<aside
-					className={`fixed top-0 left-0 h-full bg-gradient-to-b from-[#1a2140] to-[#232a47] shadow-2xl transition-transform duration-300 w-72 flex flex-col z-[101] ${
-						sidebarAbierto ? "translate-x-0" : "-translate-x-full"
-					}`}
-					style={{ minHeight: "100vh" }}
+					className={`fixed top-0 left-0 h-full z-50 bg-gradient-to-b from-[#1a2140] to-[#232a47] shadow-2xl transition-transform duration-300
+						w-72 flex flex-col ${
+							sidebarAbierto ? "translate-x-0" : "-translate-x-full"
+						}`}
 				>
 					<div className="sidebar-header flex items-center justify-between px-6 py-4 border-b border-[#232a47]">
 						<h2 className="text-xl font-bold text-yellow-400 tracking-wide">Panel</h2>
@@ -83,12 +66,12 @@ export default function PanelUsuario() {
 					</div>
 					<ul className="sidebar-menu flex-1 flex flex-col gap-1 px-4 py-4 text-base">
 						<li>
-							<a
+							<Link
 								href={`/panel/${numdoc}/dashboard`}
 								className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#2d365c] transition"
 							>
 								🏠 Panel de control
-							</a>
+							</Link>
 						</li>
 						<li>
 							<button
@@ -102,10 +85,10 @@ export default function PanelUsuario() {
 							{submenu === "usuarios" && (
 								<ul className="ml-7 mt-1 flex flex-col gap-1">
 									<li>
-										<a href={`/panel/${numdoc}/usuarios/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de usuarios</a>
+										<Link href={`/panel/${numdoc}/usuarios/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de usuarios</Link>
 									</li>
 									<li>
-										<a href={`/panel/${numdoc}/usuarios/nuevo`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar usuario</a>
+										<Link href={`/panel/${numdoc}/usuarios/nuevo`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar usuario</Link>
 									</li>
 								</ul>
 							)}
@@ -122,10 +105,10 @@ export default function PanelUsuario() {
 							{submenu === "productos" && (
 								<ul className="ml-7 mt-1 flex flex-col gap-1">
 									<li>
-										<a href={`/panel/${numdoc}/productos/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de productos</a>
+										<Link href={`/panel/${numdoc}/productos/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de productos</Link>
 									</li>
 									<li>
-										<a href={`/panel/${numdoc}/productos/nuevo`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar producto</a>
+										<Link href={`/panel/${numdoc}/productos/nuevo`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar producto</Link>
 									</li>
 								</ul>
 							)}
@@ -142,10 +125,10 @@ export default function PanelUsuario() {
 							{submenu === "noticias" && (
 								<ul className="ml-7 mt-1 flex flex-col gap-1">
 									<li>
-										<a href={`/panel/${numdoc}/noticias/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de noticias</a>
+										<Link href={`/panel/${numdoc}/noticias/lista`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Lista de noticias</Link>
 									</li>
 									<li>
-										<a href={`/panel/${numdoc}/noticias/nueva`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar noticia</a>
+										<Link href={`/panel/${numdoc}/noticias/nueva`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Agregar noticia</Link>
 									</li>
 								</ul>
 							)}
@@ -162,10 +145,10 @@ export default function PanelUsuario() {
 							{submenu === "reportes" && (
 								<ul className="ml-7 mt-1 flex flex-col gap-1">
 									<li>
-										<a href={`/panel/${numdoc}/reportes/ventas`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Reporte de ventas</a>
+										<Link href={`/panel/${numdoc}/reportes/ventas`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Reporte de ventas</Link>
 									</li>
 									<li>
-										<a href={`/panel/${numdoc}/reportes/usuarios`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Reporte de usuarios</a>
+										<Link href={`/panel/${numdoc}/reportes/usuarios`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Reporte de usuarios</Link>
 									</li>
 								</ul>
 							)}
@@ -182,10 +165,10 @@ export default function PanelUsuario() {
 							{submenu === "configuracion" && (
 								<ul className="ml-7 mt-1 flex flex-col gap-1">
 									<li>
-										<a href={`/panel/${numdoc}/configuracion/perfil`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Perfil</a>
+										<Link href={`/panel/${numdoc}/configuracion/perfil`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Perfil</Link>
 									</li>
 									<li>
-										<a href={`/panel/${numdoc}/configuracion/sitio`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Sitio</a>
+										<Link href={`/panel/${numdoc}/configuracion/sitio`} className="block px-2 py-1 rounded hover:bg-[#232a47]">Sitio</Link>
 									</li>
 								</ul>
 							)}
@@ -195,7 +178,7 @@ export default function PanelUsuario() {
 								href="#"
 								onClick={(e) => {
 									e.preventDefault();
-									cerrarSesion();
+									// Puedes agregar aquí la función de cerrar sesión si lo deseas
 								}}
 								className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-700 hover:text-white transition"
 							>
@@ -204,17 +187,30 @@ export default function PanelUsuario() {
 						</li>
 					</ul>
 				</aside>
-				<main
-					className={`flex-1 flex flex-col items-center justify-center p-8 bg-[#232a47] transition-all duration-300 min-h-0 w-full ${
-						sidebarAbierto ? "blur-sm pointer-events-none select-none" : ""
-					}`}
-				>
-					<h1 className="text-3xl font-bold mb-4">
-						Bienvenido{usuario && usuario.nombres ? `, ${usuario.nombres}` : ""}
-					</h1>
+				<main className="flex-1 flex flex-col items-center justify-center p-8 bg-[#232a47]">
+					<h1 className="text-3xl font-bold mb-6">Perfil de usuario</h1>
 					{usuario ? (
-						<div className="flex flex-col items-center gap-4">
-							{/* El botón de cerrar sesión está en el sidebar */}
+						<div className="bg-[#1a2140] rounded-lg p-6 shadow-lg w-full max-w-md flex flex-col gap-4">
+							<p>
+								<span className="font-semibold">Nombre completo:</span>{" "}
+								{usuario.nombres}
+							</p>
+							<p>
+								<span className="font-semibold">Tipo de documento:</span>{" "}
+								{usuario.tipodoc || "No especificado"}
+							</p>
+							<p>
+								<span className="font-semibold">Número de documento:</span>{" "}
+								{usuario.numdoc}
+							</p>
+							<p>
+								<span className="font-semibold">Dirección:</span>{" "}
+								{usuario.direccion || "No especificada"}
+							</p>
+							<p>
+								<span className="font-semibold">Contacto:</span>{" "}
+								{usuario.contacto || usuario.telefono || usuario.celular || "No especificado"}
+							</p>
 						</div>
 					) : (
 						<p className="text-red-600 text-lg">Usuario no encontrado.</p>
