@@ -5,7 +5,7 @@ import Header from "@/components/header/Header";
 import NavBar from "@/components/nav/NavBar";
 import Footer from "@/components/footer/Footer";
 
-export default function CorporacionPage() {
+export default function ProductoresPage() {
   const [dark, setDark] = useState(true);
 
   return (
@@ -19,8 +19,8 @@ export default function CorporacionPage() {
       <Header dark={dark} />
       <NavBar dark={dark} setDark={setDark} />
       <main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
-        <h1 className="text-2xl font-bold mb-4">Sobre la Corporación</h1>
-        <p>Información sobre la Corporación Social Rosa Blanca.</p>
+        <h1 className="text-2xl font-bold mb-4">Productores</h1>
+        <p>Conoce a los productores aliados del Mercado Comunitario Girardot.</p>
       </main>
       <Footer />
     </div>

@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface HeaderProps {
@@ -42,8 +43,8 @@ function Header({ dark = true }: HeaderProps) {
         : "bg-gradient-to-r from-white via-blue-100 to-lime-100"
       }`}
     >
-      {/* Logo izquierda */}
-      <div className="flex-shrink-0 w-20 h-20 rounded-full bg-[#232b45] shadow-lg overflow-hidden flex items-center justify-center border-4 border-[#22306b]">
+      {/* Logo izquierda con enlace a la página principal */}
+      <Link href="/" className="flex-shrink-0 w-20 h-20 rounded-full bg-[#232b45] shadow-lg overflow-hidden flex items-center justify-center border-4 border-[#22306b]">
         <Image
           src="/Logo.png"
           alt="Mercado Comunitario Girardot"
@@ -51,7 +52,7 @@ function Header({ dark = true }: HeaderProps) {
           height={80}
           className="object-contain"
         />
-      </div>
+      </Link>
       {/* Título y subtítulo */}
       <div className="flex flex-col items-center flex-1">
         <h1 className={`font-bold text-center drop-shadow-lg tracking-wide ${dark ? "text-2xl md:text-3xl text-white" : "text-2xl md:text-3xl text-[#1B2A5B]"}`}>

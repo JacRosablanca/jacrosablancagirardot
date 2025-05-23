@@ -41,14 +41,32 @@ function NavBar({ dark = true }: NavBarProps) {
           md:flex md:flex-row md:justify-center md:items-center md:gap-8
         `}
       >
-        <li>
+        {/* <li>
           <Link href="/" className="hover:underline hover:text-lime-300 transition-colors">Tienda</Link>
+        </li> */}
+        <li>
+          <Link href="/cartelera" className="hover:underline hover:text-lime-300 transition-colors">Cartelera</Link>
+        </li>
+        <li className="relative group">
+          <Link href="/aliados" className="hover:underline hover:text-lime-300 transition-colors">Aliados</Link>
+          {/* Submenú Aliados */}
+          <ul className="absolute left-0 top-full mt-2 bg-[#1B2A5B] text-white rounded shadow-lg min-w-[180px] opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none transition-opacity duration-200 z-20">
+            <li>
+              <Link href="/aliados/productores" className="block px-4 py-2 hover:bg-blue-900">Productores</Link>
+            </li>
+            <li>
+              <Link href="/aliados/plazas" className="block px-4 py-2 hover:bg-blue-900">Plazas de Mercados Aliadas</Link>
+            </li>
+            <li>
+              <Link href="/aliados/vivanderos" className="block px-4 py-2 hover:bg-blue-900">Vivanderos</Link>
+            </li>
+          </ul>
         </li>
         <li>
-          <Link href="/corporacion" className="hover:underline hover:text-lime-300 transition-colors">Sobre la Corporación</Link>
+          <Link href="/quienes-somos" className="hover:underline hover:text-lime-300 transition-colors">Quienes Somos</Link>
         </li>
         <li>
-          <Link href="/multimedia" className="hover:underline hover:text-lime-300 transition-colors">Multimedia</Link>
+          <Link href="/galeria" className="hover:underline hover:text-lime-300 transition-colors">Galería</Link>
         </li>
         <li>
           <Link href="/contacto" className="hover:underline hover:text-lime-300 transition-colors">Contacto</Link>
