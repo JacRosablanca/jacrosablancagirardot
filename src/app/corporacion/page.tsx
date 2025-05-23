@@ -1,10 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/nav/NavBar";
+import Footer from "@/components/footer/Footer";
 
-export default function Home() {
+export default function CorporacionPage() {
   const [dark, setDark] = useState(true);
 
   return (
@@ -18,8 +19,8 @@ export default function Home() {
       <Header dark={dark} />
       <NavBar dark={dark} setDark={setDark} />
       <main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
-        <h1 className="text-2xl font-bold mb-4">Tienda</h1>
-        <p>Bienvenido a la tienda del Mercado Comunitario Girardot.</p>
+        <h1 className="text-2xl font-bold mb-4">Sobre la Corporación</h1>
+        <p>Información sobre la Corporación Social Rosa Blanca.</p>
       </main>
       <Footer />
     </div>

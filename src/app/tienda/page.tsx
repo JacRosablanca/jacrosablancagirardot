@@ -1,10 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/nav/NavBar";
+import Footer from "@/components/footer/Footer";
 
-export default function Home() {
+export default function TiendaPage() {
   const [dark, setDark] = useState(true);
 
   return (

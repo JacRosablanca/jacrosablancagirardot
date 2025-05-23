@@ -42,23 +42,20 @@ function NavBar({ dark = true }: NavBarProps) {
         `}
       >
         <li>
-          <Link href="/" className="hover:underline hover:text-lime-300 transition-colors">Inicio</Link>
+          <Link href="/" className="hover:underline hover:text-lime-300 transition-colors">Tienda</Link>
         </li>
         <li>
-          <Link href="#" className="hover:underline hover:text-lime-300 transition-colors">Tienda</Link>
+          <Link href="/corporacion" className="hover:underline hover:text-lime-300 transition-colors">Sobre la Corporación</Link>
         </li>
         <li>
-          <Link href="#" className="hover:underline hover:text-lime-300 transition-colors">Sobre la Corporación</Link>
+          <Link href="/multimedia" className="hover:underline hover:text-lime-300 transition-colors">Multimedia</Link>
         </li>
         <li>
-          <Link href="#" className="hover:underline hover:text-lime-300 transition-colors">Multimedia</Link>
-        </li>
-        <li>
-          <Link href="#" className="hover:underline hover:text-lime-300 transition-colors">Contacto</Link>
+          <Link href="/contacto" className="hover:underline hover:text-lime-300 transition-colors">Contacto</Link>
         </li>
         <li>
           <Link
-            href="#"
+            href="/ingresar"
             className={`font-bold hover:underline transition-colors ${dark ? "hover:text-yellow-300" : "hover:text-blue-700"}`}
           >
             Ingresar
