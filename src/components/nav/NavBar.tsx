@@ -69,9 +69,6 @@ function NavBar({ dark = true }: NavBarProps) {
           <Link href="/galeria" className="hover:underline hover:text-lime-300 transition-colors">Galería</Link>
         </li>
         <li>
-          <Link href="/contacto" className="hover:underline hover:text-lime-300 transition-colors">Contacto</Link>
-        </li>
-        <li>
           <Link
             href="/ingresar"
             className={`font-bold hover:underline transition-colors ${dark ? "hover:text-yellow-300" : "hover:text-blue-700"}`}

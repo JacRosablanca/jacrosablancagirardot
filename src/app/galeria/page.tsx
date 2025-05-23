@@ -5,7 +5,7 @@ import Header from "@/components/header/Header";
 import NavBar from "@/components/nav/NavBar";
 import Footer from "@/components/footer/Footer";
 
-export default function IngresarPage() {
+export default function MultimediaPage() {
   const [dark, setDark] = useState(true);
 
   return (
@@ -19,7 +19,8 @@ export default function IngresarPage() {
       <Header dark={dark} />
       <NavBar dark={dark} setDark={setDark} />
       <main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
-        <h1 className="text-3xl font-bold mb-6">Ingreso</h1>
+        <h1 className="text-2xl font-bold mb-4">Galeria</h1>
+        <p>Galería de fotos y videos del Mercado Comunitario Girardot.</p>
       </main>
       <Footer />
     </div>

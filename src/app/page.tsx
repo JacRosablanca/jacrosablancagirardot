@@ -5,23 +5,23 @@ import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/nav/NavBar";
 
 export default function Home() {
-  const [dark, setDark] = useState(true);
+	const [dark, setDark] = useState(true);
 
-  return (
-    <div
-      className={`${
-        dark
-          ? "bg-[#141a2e] text-white"
-          : "bg-gradient-to-br from-white via-blue-100 to-lime-100 text-[#1B2A5B]"
-      } min-h-screen flex flex-col transition-colors duration-500`}
-    >
-      <Header dark={dark} />
-      <NavBar dark={dark} setDark={setDark} />
-      <main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
-        <h1 className="text-2xl font-bold mb-4">Tienda</h1>
-        <p>Bienvenido a la tienda del Mercado Comunitario Girardot.</p>
-      </main>
-      <Footer />
-    </div>
-  );
+	return (
+		<div
+			className={`${
+				dark
+					? "bg-[#141a2e] text-white"
+					: "bg-gradient-to-br from-white via-blue-100 to-lime-100 text-[#1B2A5B]"
+			} min-h-screen flex flex-col transition-colors duration-500`}
+		>
+			<Header dark={dark} />
+			<NavBar dark={dark} setDark={setDark} />
+			<main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
+				<h1 className="text-3xl font-bold mb-6">Bienvenido</h1>
+				{/* ...puedes agregar contenido aquí... */}
+			</main>
+			<Footer />
+		</div>
+	);
 }
