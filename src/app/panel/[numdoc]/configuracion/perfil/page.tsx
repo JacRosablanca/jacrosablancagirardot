@@ -209,7 +209,7 @@ export default function PerfilUsuario() {
 							</p>
 							<p>
 								<span className="font-semibold">Contacto:</span>{" "}
-								{usuario.contacto || usuario.telefono || usuario.celular || "No especificado"}
+								{usuario.contacto || "No especificado"}
 							</p>
 						</div>
 					) : (
