@@ -41,18 +41,9 @@ function Header({ dark = true }: HeaderProps) {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const storedUserName = localStorage.getItem("userName");
-    const storedFullName = localStorage.getItem("fullName");
-    if (storedUserName && storedFullName) {
-      setUserName(storedUserName);
-      setFullName(storedFullName);
-    }
-  }, []);
-
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
     const usuario = formData.get("usuario")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
     
@@ -70,6 +61,14 @@ function Header({ dark = true }: HeaderProps) {
       alert('Usuario o contraseña incorrectos');
     }
   };
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("userName");
+    const storedFullName = localStorage.getItem("fullName");
+    
+    if (storedUserName) setUserName(storedUserName);
+    if (storedFullName) setFullName(storedFullName);
+  }, []);
 
   return (
     <header
@@ -121,11 +120,11 @@ function Header({ dark = true }: HeaderProps) {
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-[#1B2A5B] rounded-md shadow-xl z-10">
-                  <Link href="/perfil" className="block px-4 py-2 text-sm text-gray-300 hover:bg-blue-700 hover:text-white">
-                    Perfil
+                  <Link href={`/panel/${userName}`} className="block px-4 py-2 text-sm text-gray-300 hover:bg-blue-700 hover:text-white">
+                    Panel
                   </Link>
-                  <Link href="/configuracion" className="block px-4 py-2 text-sm text-gray-300 hover:bg-blue-700 hover:text-white">
-                    Configuración
+                  <Link href={`/panel/${userName}/configuracion/perfil`} className="block px-4 py-2 text-sm text-gray-300 hover:bg-blue-700 hover:text-white">
+                    Perfil
                   </Link>
                   <button
                     onClick={() => {

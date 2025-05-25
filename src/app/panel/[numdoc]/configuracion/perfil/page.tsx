@@ -1,12 +1,28 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import usuarios from "@/datos/usuarios.json";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
+interface UsuarioData {
+	nombres: string;
+	direccion: string;
+	contacto: string;
+	numdoc: string;
+	tipodoc: string;
+	contrasena: string;
+	whatsapp: string;
+	facebook: string;
+	instagram: string;
+	twitter: string;
+	tiktok: string;
+	threads: string;
+}
+
 export default function PerfilUsuario() {
+	const router = useRouter();
 	const params = useParams();
 	const numdoc = params?.numdoc
 		? Array.isArray(params.numdoc)
@@ -20,6 +36,45 @@ export default function PerfilUsuario() {
 
 	const [sidebarAbierto, setSidebarAbierto] = useState(false);
 	const [submenu, setSubmenu] = useState<string | null>(null);
+	const [isEditing, setIsEditing] = useState(false);
+	const [isChangingPassword, setIsChangingPassword] = useState(false);
+	const [editedData, setEditedData] = useState<UsuarioData>({
+		nombres: usuario?.nombres || '',
+		direccion: usuario?.direccion || '',
+		contacto: usuario?.contacto || '',
+		numdoc: usuario?.numdoc || '',
+		tipodoc: usuario?.tipodoc || '',
+		contrasena: usuario?.contrasena || '',
+		whatsapp: usuario?.whatsapp || '',
+		facebook: usuario?.facebook || '',
+		instagram: usuario?.instagram || '',
+		twitter: usuario?.twitter || '',
+		tiktok: usuario?.tiktok || '',
+		threads: usuario?.threads || ''
+	});
+	const [passwordData, setPasswordData] = useState({
+		currentPassword: '',
+		newPassword: '',
+		confirmPassword: ''
+	});
+
+	useEffect(() => {
+		const storedUserName = localStorage.getItem("userName");
+		if (!storedUserName) {
+			router.push('/');
+			return;
+		}
+		// Verificar que el usuario logueado coincida con el perfil que intenta ver
+		if (storedUserName !== numdoc) {
+			router.push('/');
+			return;
+		}
+	}, [numdoc, router]);
+
+	// Si no hay usuario autenticado, mostrar pantalla de carga mientras redirecciona
+	if (!localStorage.getItem("userName")) {
+		return null;
+	}
 
 	function toggleSidebar() {
 		setSidebarAbierto((prev) => !prev);
@@ -28,6 +83,66 @@ export default function PerfilUsuario() {
 	function handleSubmenu(item: string) {
 		setSubmenu((prev) => (prev === item ? null : item));
 	}
+
+	const handleEditSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		
+		const updatedUsers = usuarios.map(u => 
+			u.numdoc === numdoc ? { ...u, ...editedData } : u
+		);
+
+		try {
+			const response = await fetch('/api/usuarios', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedUsers),
+			});
+
+			if (!response.ok) throw new Error('Error al guardar los cambios');
+			
+			setIsEditing(false);
+			// Recargar la página para ver los cambios
+			window.location.reload();
+		} catch (error) {
+			console.error('Error al guardar:', error);
+			alert('Error al guardar los cambios');
+		}
+	};
+
+	const handlePasswordChange = async (e: React.FormEvent) => {
+		e.preventDefault();
+		
+		if (passwordData.newPassword !== passwordData.confirmPassword) {
+			alert('Las contraseñas no coinciden');
+			return;
+		}
+
+		const updatedUsers = usuarios.map(u => 
+			u.numdoc === numdoc && u.contrasena === passwordData.currentPassword
+				? { ...u, contrasena: passwordData.newPassword }
+				: u
+		);
+
+		try {
+			const response = await fetch('/api/usuarios', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedUsers),
+			});
+
+			if (!response.ok) throw new Error('Error al cambiar la contraseña');
+
+			setIsChangingPassword(false);
+			alert('Contraseña actualizada correctamente');
+		} catch (error) {
+			console.error('Error al cambiar la contraseña:', error);
+			alert('Error al cambiar la contraseña');
+		}
+	};
 
 	return (
 		<div className="bg-[#141a2e] text-white min-h-screen flex flex-col">
@@ -191,29 +306,263 @@ export default function PerfilUsuario() {
 					<h1 className="text-3xl font-bold mb-6">Perfil de usuario</h1>
 					{usuario ? (
 						<div className="bg-[#1a2140] rounded-lg p-6 shadow-lg w-full max-w-md flex flex-col gap-4">
-							<p>
-								<span className="font-semibold">Nombre completo:</span>{" "}
-								{usuario.nombres}
-							</p>
-							<p>
-								<span className="font-semibold">Tipo de documento:</span>{" "}
-								{usuario.tipodoc || "No especificado"}
-							</p>
-							<p>
-								<span className="font-semibold">Número de documento:</span>{" "}
-								{usuario.numdoc}
-							</p>
-							<p>
-								<span className="font-semibold">Dirección:</span>{" "}
-								{usuario.direccion || "No especificada"}
-							</p>
-							<p>
-								<span className="font-semibold">Contacto:</span>{" "}
-								{usuario.contacto || "No especificado"}
-							</p>
+							{!isEditing ? (
+								<>
+									<p>
+										<span className="font-semibold">Nombre completo:</span>{" "}
+										{usuario.nombres}
+									</p>
+									<p>
+										<span className="font-semibold">Tipo de documento:</span>{" "}
+										{usuario.tipodoc || "No especificado"}
+									</p>
+									<p>
+										<span className="font-semibold">Número de documento:</span>{" "}
+										{usuario.numdoc}
+									</p>
+									<p>
+										<span className="font-semibold">Dirección:</span>{" "}
+										{usuario.direccion || "No especificada"}
+									</p>
+									<p>
+										<span className="font-semibold">Contacto:</span>{" "}
+										{usuario.contacto || "No especificado"}
+									</p>
+									<div className="mt-4 pt-4 border-t border-gray-600">
+										<h3 className="text-lg font-semibold mb-3">Redes Sociales</h3>
+										<div className="space-y-2">
+											{usuario.whatsapp && (
+												<p>
+													<span className="font-semibold">WhatsApp:</span>{" "}
+													<a href={`https://wa.me/${usuario.whatsapp}`} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.whatsapp}
+													</a>
+												</p>
+											)}
+											{usuario.facebook && (
+												<p>
+													<span className="font-semibold">Facebook:</span>{" "}
+													<a href={usuario.facebook} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.facebook}
+													</a>
+												</p>
+											)}
+											{usuario.instagram && (
+												<p>
+													<span className="font-semibold">Instagram:</span>{" "}
+													<a href={usuario.instagram} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.instagram}
+													</a>
+												</p>
+											)}
+											{usuario.twitter && (
+												<p>
+													<span className="font-semibold">Twitter:</span>{" "}
+													<a href={usuario.twitter} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.twitter}
+													</a>
+												</p>
+											)}
+											{usuario.tiktok && (
+												<p>
+													<span className="font-semibold">TikTok:</span>{" "}
+													<a href={usuario.tiktok} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.tiktok}
+													</a>
+												</p>
+											)}
+											{usuario.threads && (
+												<p>
+													<span className="font-semibold">Threads:</span>{" "}
+													<a href={usuario.threads} target="_blank" rel="noopener noreferrer" 
+													   className="text-blue-400 hover:text-blue-300">
+														{usuario.threads}
+													</a>
+												</p>
+											)}
+										</div>
+									</div>
+									<div className="flex gap-4 mt-4">
+										<button
+											onClick={() => setIsEditing(true)}
+											className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+										>
+											Editar Perfil
+										</button>
+										<button
+											onClick={() => setIsChangingPassword(true)}
+											className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+										>
+											Cambiar Contraseña
+										</button>
+									</div>
+								</>
+							) : (
+								<form onSubmit={handleEditSubmit} className="space-y-4">
+									<div>
+										<label className="block text-sm font-medium mb-1">Nombres</label>
+										<input
+											type="text"
+											value={editedData.nombres}
+											onChange={(e) => setEditedData({...editedData, nombres: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-1">Dirección</label>
+										<input
+											type="text"
+											value={editedData.direccion}
+											onChange={(e) => setEditedData({...editedData, direccion: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-1">Contacto</label>
+										<input
+											type="text"
+											value={editedData.contacto}
+											onChange={(e) => setEditedData({...editedData, contacto: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div className="mt-6 pt-4 border-t border-gray-600">
+										<h3 className="text-lg font-semibold mb-3">Redes Sociales</h3>
+										<div className="space-y-4">
+											<div>
+												<label className="block text-sm font-medium mb-1">WhatsApp</label>
+												<input
+													type="text"
+													value={editedData.whatsapp}
+													onChange={(e) => setEditedData({...editedData, whatsapp: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+											<div>
+												<label className="block text-sm font-medium mb-1">Facebook</label>
+												<input
+													type="text"
+													value={editedData.facebook}
+													onChange={(e) => setEditedData({...editedData, facebook: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+											<div>
+												<label className="block text-sm font-medium mb-1">Instagram</label>
+												<input
+													type="text"
+													value={editedData.instagram}
+													onChange={(e) => setEditedData({...editedData, instagram: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+											<div>
+												<label className="block text-sm font-medium mb-1">Twitter</label>
+												<input
+													type="text"
+													value={editedData.twitter}
+													onChange={(e) => setEditedData({...editedData, twitter: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+											<div>
+												<label className="block text-sm font-medium mb-1">TikTok URL</label>
+												<input
+													type="text"
+													value={editedData.tiktok}
+													onChange={(e) => setEditedData({...editedData, tiktok: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+											<div>
+												<label className="block text-sm font-medium mb-1">Threads URL</label>
+												<input
+													type="text"
+													value={editedData.threads}
+													onChange={(e) => setEditedData({...editedData, threads: e.target.value})}
+													className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+												/>
+											</div>
+										</div>
+									</div>
+									<div className="flex gap-4">
+										<button
+											type="submit"
+											className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+										>
+											Guardar
+										</button>
+										<button
+											type="button"
+											onClick={() => setIsEditing(false)}
+											className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+										>
+											Cancelar
+										</button>
+									</div>
+								</form>
+							)}
 						</div>
 					) : (
 						<p className="text-red-600 text-lg">Usuario no encontrado.</p>
+					)}
+
+					{/* Modal para cambiar contraseña */}
+					{isChangingPassword && (
+						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+							<div className="bg-[#1a2140] p-6 rounded-lg w-96">
+								<h3 className="text-xl font-bold mb-4">Cambiar Contraseña</h3>
+								<form onSubmit={handlePasswordChange} className="space-y-4">
+									<div>
+										<label className="block text-sm font-medium mb-1">Contraseña Actual</label>
+										<input
+											type="password"
+											value={passwordData.currentPassword}
+											onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-1">Nueva Contraseña</label>
+										<input
+											type="password"
+											value={passwordData.newPassword}
+											onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-1">Confirmar Nueva Contraseña</label>
+										<input
+											type="password"
+											value={passwordData.confirmPassword}
+											onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
+											className="w-full p-2 rounded bg-[#232b45] border border-gray-600"
+										/>
+									</div>
+									<div className="flex gap-4">
+										<button
+											type="submit"
+											className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+										>
+											Cambiar
+										</button>
+										<button
+											type="button"
+											onClick={() => setIsChangingPassword(false)}
+											className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+										>
+											Cancelar
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					)}
 				</main>
 			</div>
