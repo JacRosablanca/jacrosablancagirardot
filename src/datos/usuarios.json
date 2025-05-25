@@ -1,46 +1,13 @@
 [
   {
     "id": "1",
-    "tipodoc": "CC",
-    "numdoc": "1085312034",
-    "nombres": "ANDRES CAMILO VIDAL ",
-    "direccion": "Carrera 12 N. 32-137",
+    "tipodoc": "NIT",
+    "numdoc": "808002688",
+    "nombres": "JUNTA DE ACCION COMUNAL DEL BARRIO DE ROSA BLANCA",
+    "direccion": "Diagonal 33 N. 12 A Esquina",
     "barrio": "Rosa Blanca",
     "contacto": "3043470984",
-    "usuario": "1085312034",
-    "contrasena": "1085312034"
-  },
-  {
-    "id": "2",
-    "tipodoc": "CC",
-    "numdoc": "39553553",
-    "nombres": "OLGA LUCIA ORTIZ GONZALEZ",
-    "direccion": "Carrera 12 N. 32-137",
-    "barrio": "Rosa Blanca",
-    "contacto": "3114805352",
-    "usuario": "39553553",
-    "contrasena": "39553553"
-  },
-  {
-    "id": "3",
-    "tipodoc": "CC",
-    "numdoc": "5813531",
-    "nombres": "JACINTO VIDAL",
-    "direccion": "Calle 32 N. 12-36",
-    "barrio": "Rosa Blanca",
-    "contacto": "3043470984",
-    "usuario": "5813531",
-    "contrasena": "5813531"
-  },
-  {
-    "id": "4",
-    "tipodoc": "CC",
-    "numdoc": "20207213",
-    "nombres": "CARMEN ELISA RAMIREZ",
-    "direccion": "Calle 32 N. 12-36",
-    "barrio": "Rosa Blanca",
-    "contacto": "3114805352",
-    "usuario": "20207213",
-    "contrasena": "20207213"
+    "usuario": "808002688",
+    "contrasena": "808002688"
   }
 ]
