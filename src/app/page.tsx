@@ -1,27 +1,20 @@
 "use client";
-import { useState } from "react";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
-import NavBar from "@/components/nav/NavBar";
+import React, { Component } from 'react'
+import Header from "@/components/header/page";
+import Footer from "@/components/footer/page";
 
-export default function Home() {
-	const [dark, setDark] = useState(true);
-
-	return (
-		<div
-			className={`${
-				dark
-					? "bg-[#141a2e] text-white"
-					: "bg-gradient-to-br from-white via-blue-100 to-lime-100 text-[#1B2A5B]"
-			} min-h-screen flex flex-col transition-colors duration-500`}
-		>
-			<Header dark={dark} />
-			<NavBar dark={dark} setDark={setDark} />
-			<main className="flex flex-col items-center justify-center flex-1 min-h-[60vh]">
-				<h1 className="text-3xl font-bold mb-6">Bienvenido</h1>
-				{/* ...puedes agregar contenido aquí... */}
-			</main>
-			<Footer />
-		</div>
-	);
+export class page extends Component {
+  render() {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#f5f6fa] dark:bg-[#18181b] transition-colors duration-300">
+        <Header />
+        <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+          
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 }
+
+export default page
