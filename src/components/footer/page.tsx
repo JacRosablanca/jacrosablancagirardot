@@ -58,7 +58,7 @@ export default function Footer() {
           Administrado por Junta de Acción Comunal Rosa Blanca 1er sector
         </span>
         <span>
-          © {new Date().getFullYear()} JAC Rosa Blanca. Todos los derechos reservados.
+          © {new Date().getFullYear()}. Todos los derechos reservados.
         </span>
       </div>
     </footer>
