@@ -85,7 +85,7 @@ export default function Header() {
           <div className="m-0 p-0">NIT. 808.002.688-7</div>
           <div className="m-0 p-0">PERSONERIA JURIDICA 103 DE 1962</div>
           <div className="m-0 p-0">RUC. 15-1884-3053</div>
-          <div className="m-0 p-0">{ciudad}</div>
+          <div className="m-0 p-0">Girardot, Cundinamarca</div>
           <div className="m-0 p-0 text-xs md:text-sm text-gray-700 dark:text-gray-300 font-normal italic">
             En {ciudad}, son las: {hora}
           </div>
