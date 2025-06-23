@@ -264,7 +264,7 @@ export default function PanelPage() {
             value={
               (typeof window !== "undefined"
                 ? `${window.location.origin}/panel/afiliado/${affiliation.numeroDocumento}`
-                : `http://jacrosablancagirardot.com/panel/afiliado/${affiliation.numeroDocumento}`)
+                : `https://jacrosablancagirardot.vercel.app/panel/afiliado/${affiliation.numeroDocumento}`)
             }
             readOnly
           />
