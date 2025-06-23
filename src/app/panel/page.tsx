@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import { useState } from "react";
 
 function getToday() {
   const d = new Date();
@@ -49,21 +48,7 @@ export default function PanelPage() {
     ubicacion: ""
   });
 
-  // Estado para coordenadas
-  const [coordenadas, setCoordenadas] = useState<{ lat: number; lng: number } | null>(null);
 
-  // Carga dinámica del mapa solo en cliente
-  const Map = dynamic(() => import("./UbicacionMap"), { ssr: false });
-
-  // Actualiza coordenadas en el estado de afiliación
-  useEffect(() => {
-    if (coordenadas) {
-      setAffiliation(a => ({
-        ...a,
-        ubicacion: `${coordenadas.lat},${coordenadas.lng}`
-      }));
-    }
-  }, [coordenadas]);
 
   // Actualiza edad automáticamente al cambiar fecha de nacimiento
   const handleFechaNacimiento = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +171,6 @@ export default function PanelPage() {
             <div className="flex flex-col gap-2 col-span-1 md:col-span-2">
               <label className="font-semibold text-gray-700 dark:text-gray-200">Ubicación (selecciona en el mapa)</label>
               <div className="w-full h-64 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700">
-                <Map setCoordenadas={setCoordenadas} coordenadas={coordenadas} />
               </div>
               <input
                 type="text"
