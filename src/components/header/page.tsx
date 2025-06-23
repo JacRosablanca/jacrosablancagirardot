@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const [hora, setHora] = useState("");
   const [ciudad, setCiudad] = useState("...");
-  const [navOpen, setNavOpen] = useState(false);
 
   // Obtener hora local
   useEffect(() => {
@@ -111,39 +109,6 @@ export default function Header() {
             />
           </div>
         </div>
-        {/* NAV RESPONSIVE DEBAJO DEL TEXTO */}
-        <nav className="w-full mt-2 bg-white dark:bg-[#23232a] border-t border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-3xl mx-auto flex items-center justify-between px-4 py-2">
-            {/* Hamburguesa */}
-            <button
-              className="md:hidden text-2xl text-gray-700 dark:text-gray-200"
-              onClick={() => setNavOpen(!navOpen)}
-              aria-label="Abrir menú"
-            >
-              {navOpen ? <FaTimes /> : <FaBars />}
-            </button>
-            {/* Links desktop */}
-            <ul className="hidden md:flex gap-6 text-gray-700 dark:text-gray-200 font-medium w-full justify-center">
-              <li><a href="#">Inicio</a></li>
-              <li><a href="#">Sobre la Junta</a></li>
-              <li><a href="#">Comunidad</a></li>
-              <li><a href="#">Contacto</a></li>
-            </ul>
-          </div>
-          {/* Links mobile */}
-          <div
-            className={`md:hidden bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 transition-all duration-200 overflow-hidden ${
-              navOpen ? "max-h-60 py-4" : "max-h-0 py-0"
-            }`}
-          >
-            <ul className="flex flex-col items-center gap-4 text-gray-700 dark:text-gray-200 font-medium">
-              <li><a href="#" onClick={() => setNavOpen(false)}>Inicio</a></li>
-              <li><a href="#" onClick={() => setNavOpen(false)}>Sobre la Junta</a></li>
-              <li><a href="#" onClick={() => setNavOpen(false)}>Comunidad</a></li>
-              <li><a href="#" onClick={() => setNavOpen(false)}>Contacto</a></li>
-            </ul>
-          </div>
-        </nav>
       </header>
     </>
   );
