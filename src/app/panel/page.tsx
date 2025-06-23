@@ -261,7 +261,11 @@ export default function PanelPage() {
             type="url"
             placeholder="URL Perfil Afiliado"
             className="border rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 cursor-not-allowed"
-            value={`http://localhost:3000/panel/afiliado/${affiliation.numeroDocumento}`}
+            value={
+              (typeof window !== "undefined"
+                ? `${window.location.origin}/panel/afiliado/${affiliation.numeroDocumento}`
+                : `http://jacrosablancagirardot.com/panel/afiliado/${affiliation.numeroDocumento}`)
+            }
             readOnly
           />
           <button type="submit" className="bg-blue-700 text-white rounded py-2 font-semibold hover:bg-blue-900 transition">
