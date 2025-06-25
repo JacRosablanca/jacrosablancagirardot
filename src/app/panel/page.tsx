@@ -19,7 +19,7 @@ function calcularEdad(fechaNacimiento: string) {
 }
 
 export default function PanelPage() {
-  const [login, setLogin] = useState({ email: "", password: "" });
+  const [login, setLogin] = useState({ numeroDocumento: "", tipoDocumento: "", cargo: "", password: "" });
   const [showAffiliation, setShowAffiliation] = useState(false);
   const [affiliation, setAffiliation] = useState({
     numeroAfiliacion: "1", // El primer usuario es 1
@@ -60,6 +60,25 @@ export default function PanelPage() {
     }));
   };
 
+  // Simulación: determina tipoDocumento y cargo según el número de documento
+  const handleNumeroDocumento = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numeroDocumento = e.target.value;
+    let tipoDocumento = "";
+    let cargo = "";
+    // Lógica simulada: puedes reemplazar esto por una consulta real
+    if (numeroDocumento.length === 10) {
+      tipoDocumento = "Cédula de Ciudadanía";
+      cargo = "AFILIADO";
+    } else if (numeroDocumento.length === 8) {
+      tipoDocumento = "Tarjeta de Identidad";
+      cargo = "AFILIADO";
+    } else {
+      tipoDocumento = "";
+      cargo = "";
+    }
+    setLogin({ ...login, numeroDocumento, tipoDocumento, cargo });
+  };
+
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center py-8">
       <h1 className="text-2xl font-bold mb-8 text-[#19295A] dark:text-white">Panel de Acceso</h1>
@@ -68,11 +87,25 @@ export default function PanelPage() {
           <form className="w-full max-w-md bg-white dark:bg-[#23232a] rounded-xl shadow-lg p-8 flex flex-col gap-5 border border-gray-200 dark:border-gray-700">
             <h2 className="text-2xl font-bold mb-4 text-[#19295A] dark:text-blue-200">Ingresar</h2>
             <input
-              type="email"
-              placeholder="Correo electrónico"
+              type="text"
+              placeholder="Número de documento"
               className="border border-gray-300 dark:border-gray-700 rounded px-4 py-2 bg-gray-50 dark:bg-[#23232a] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={login.email}
-              onChange={e => setLogin({ ...login, email: e.target.value })}
+              value={login.numeroDocumento}
+              onChange={handleNumeroDocumento}
+            />
+            <input
+              type="text"
+              placeholder="Tipo de documento"
+              className="border border-gray-300 dark:border-gray-700 rounded px-4 py-2 bg-gray-100 dark:bg-gray-800 cursor-not-allowed text-gray-900 dark:text-gray-100"
+              value={login.tipoDocumento}
+              readOnly
+            />
+            <input
+              type="text"
+              placeholder="Cargo"
+              className="border border-gray-300 dark:border-gray-700 rounded px-4 py-2 bg-gray-100 dark:bg-gray-800 cursor-not-allowed text-gray-900 dark:text-gray-100"
+              value={login.cargo}
+              readOnly
             />
             <input
               type="password"

@@ -1,65 +1,87 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaEnvelope, FaPhone, FaMapMarkerAlt, FaBuilding } from "react-icons/fa";
+import GOOGLE_SHEETS_API_KEY from "@/config/googleApiKey";
+
+// IDs y rangos para Google Sheets
+const SHEET_ID = "1eXaCAyfkWY1ac-5KitWPKETMoSvAzuyp_NVZfYH5NDI";
+const FOOTER_RANGE = "Footer!A2:H2";
+
+type FooterData = {
+  DireccionSede: string;
+  BarrioVereda: string;
+  LlamadasYWhatsapp: string;
+  CorreoElectronico: string;
+  EscudoPais: string;
+  EscudoDepto: string;
+  EscudoMunicipio: string;
+  LogoIVC: string;
+};
+
+function parseFooterRow(row: string[]): FooterData {
+  return {
+    DireccionSede: row[0] || "",
+    BarrioVereda: row[1] || "",
+    LlamadasYWhatsapp: row[2] || "",
+    CorreoElectronico: row[3] || "",
+    EscudoPais: row[4] || "",
+    EscudoDepto: row[5] || "",
+    EscudoMunicipio: row[6] || "",
+    LogoIVC: row[7] || "",
+  };
+}
 
 export default function Footer() {
+  const [footer, setFooter] = useState<FooterData | null>(null);
+
+  useEffect(() => {
+    async function fetchFooter() {
+      try {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${FOOTER_RANGE}?alt=json&key=${GOOGLE_SHEETS_API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.values && data.values.length > 0) {
+          setFooter(parseFooterRow(data.values[0]));
+        }
+      } catch {
+        setFooter(null);
+      }
+    }
+    fetchFooter();
+  }, []);
+
+  const direccion = footer?.DireccionSede || "";
+  const barrio = footer?.BarrioVereda || "";
+  const llamadas = footer?.LlamadasYWhatsapp || "";
+  const correo = footer?.CorreoElectronico || "";
+  const escudoPais = footer?.EscudoPais || "";
+  const escudoDepto = footer?.EscudoDepto || "";
+  const escudoMunicipio = footer?.EscudoMunicipio || "";
+  const logoIVC = footer?.LogoIVC || "";
+
   return (
-    <footer className="w-full bg-white dark:bg-[#23232a]">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
-        {/* Secciones principales */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between">
-          {/* Enlaces Rápidos */}
-          <div className="flex-1 flex flex-col items-center text-center text-gray-700 dark:text-gray-300">
-            <h3 className="text-lg font-semibold">Enlaces Rápidos</h3>
-            <ul className="text-sm">
-              <li><a href="#">Términos y Condiciones</a></li>
-              <li><a href="#">Política de Privacidad</a></li>
-              <li><a href="#">Sobre la Junta</a></li>
-              <li><a href="#">Sobre la Comunidad</a></li>
-              <li><a href="#">Contacto</a></li>
-            </ul>
-          </div>
-          {/* Contacto */}
-          <div className="flex-1 flex flex-col items-center text-center text-gray-700 dark:text-gray-300">
-            <h3 className="text-lg font-semibold">Contacto</h3>
-            <ul className="text-sm">
-              <li className="flex items-center justify-center gap-2"><FaEnvelope /> juntacomunalrosablanca@gmail.com</li>
-              <li className="flex items-center justify-center gap-2"><FaPhone /> (+57) 304 347 0984</li>
-              <li className="flex items-center justify-center gap-2"><FaMapMarkerAlt /> Diagonal 33 con Carrera 12 A Esquina</li>
-              <li className="flex items-center justify-center gap-2"><FaMapMarkerAlt /> Barrio Rosa Blanca 1er sector</li>
-              <li className="flex items-center justify-center gap-2"><FaBuilding /> Girardot - Cundinamarca</li>
-            </ul>
-          </div>
-          {/* Redes Sociales */}
-          <div className="flex-1 flex flex-col items-center text-center text-gray-700 dark:text-gray-300">
-            <h3 className="text-lg font-semibold">Redes Sociales</h3>
-            <ul className="text-sm">
-              <li className="flex items-center justify-center gap-2"><FaWhatsapp /> <a href="#">WhatsApp</a></li>
-              <li className="flex items-center justify-center gap-2"><FaFacebook /> <a href="#">Facebook</a></li>
-              <li className="flex items-center justify-center gap-2"><FaInstagram /> <a href="#">Instagram</a></li>
-              <li className="flex items-center justify-center gap-2"><FaTwitter /> <a href="#">X</a></li>
-              <li className="flex items-center justify-center gap-2"><FaYoutube /> <a href="#">YouTube</a></li>
-            </ul>
-          </div>
+    <footer className="w-full bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 py-6 mt-8">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
+          <div className="font-semibold">{direccion}</div>
+          <div className="text-sm">{barrio}</div>
+          <div className="text-sm">Tel/WhatsApp: {llamadas}</div>
+          <div className="text-sm">Correo: {correo}</div>
         </div>
-        {/* Logos institucionales en todo el ancho y separados igual */}
-        <div className="w-full flex justify-between items-center">
-          <Image src="/EscudoColombia.png" alt="Escudo Colombia" width={60} height={60} className="object-contain" />
-          <Image src="/EscudoCundinamarca.png" alt="Escudo Cundinamarca" width={60} height={60} className="object-contain" />
-          <Image src="/EscudoGirardot.png" alt="Escudo Girardot" width={60} height={60} className="object-contain" />
-          <Image src="/EscudoIdaco.png" alt="Escudo IDACO" width={60} height={60} className="object-contain" />
+        <div className="flex flex-row items-center gap-4">
+          {escudoPais ? (
+            <Image src={escudoPais} alt="Escudo País" width={40} height={40} className="object-contain" />
+          ) : null}
+          {escudoDepto ? (
+            <Image src={escudoDepto} alt="Escudo Depto" width={40} height={40} className="object-contain" />
+          ) : null}
+          {escudoMunicipio ? (
+            <Image src={escudoMunicipio} alt="Escudo Municipio" width={40} height={40} className="object-contain" />
+          ) : null}
+          {logoIVC ? (
+            <Image src={logoIVC} alt="Logo IVC" width={40} height={40} className="object-contain" />
+          ) : null}
         </div>
-      </div>
-      <div className="flex flex-col md:flex-row items-center justify-between text-gray-500 dark:text-gray-400 text-xs">
-        <span>
-          Desarrollado por <a href="#">NextCode-Labs</a>
-        </span>
-        <span>
-          Administrado por Junta de Acción Comunal Rosa Blanca 1er sector
-        </span>
-        <span>
-          © {new Date().getFullYear()}. Todos los derechos reservados.
-        </span>
       </div>
     </footer>
   );
