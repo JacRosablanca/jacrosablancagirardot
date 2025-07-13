@@ -60,28 +60,273 @@ export default function Footer() {
   const logoIVC = footer?.LogoIVC || "";
 
   return (
-    <footer className="w-full bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 py-6 mt-8">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
-          <div className="font-semibold">{direccion}</div>
-          <div className="text-sm">{barrio}</div>
-          <div className="text-sm">Tel/WhatsApp: {llamadas}</div>
-          <div className="text-sm">Correo: {correo}</div>
+    <footer className="w-full bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 py-8 mt-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+        {/* Enlaces rápidos */}
+        <div>
+          <h3 className="font-bold text-lg mb-2 text-[#19295A] dark:text-blue-200">
+            Enlaces Rápidos
+          </h3>
+          <ul className="text-base text-gray-700 dark:text-gray-200 space-y-1">
+            <li>
+              <a
+                href="/terminos"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Términos y Condiciones
+              </a>
+            </li>
+            <li>
+              <a
+                href="/privacidad"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Política de Privacidad
+              </a>
+            </li>
+            <li>
+              <a
+                href="/mercado"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Sobre el Mercado Comunitario
+              </a>
+            </li>
+            <li>
+              <a
+                href="/corporacion"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Sobre la Corporación
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contacto"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Contacto
+              </a>
+            </li>
+          </ul>
         </div>
-        <div className="flex flex-row items-center gap-4">
-          {escudoPais ? (
-            <Image src={escudoPais} alt="Escudo País" width={40} height={40} className="object-contain" />
-          ) : null}
-          {escudoDepto ? (
-            <Image src={escudoDepto} alt="Escudo Depto" width={40} height={40} className="object-contain" />
-          ) : null}
-          {escudoMunicipio ? (
-            <Image src={escudoMunicipio} alt="Escudo Municipio" width={40} height={40} className="object-contain" />
-          ) : null}
-          {logoIVC ? (
-            <Image src={logoIVC} alt="Logo IVC" width={40} height={40} className="object-contain" />
-          ) : null}
+        {/* Contacto (Centro) */}
+        <div className="flex flex-col items-center">
+          <h3 className="font-bold text-lg mb-2 text-[#19295A] dark:text-blue-200">
+            Contacto
+          </h3>
+          <div className="flex flex-col items-center gap-1 text-gray-700 dark:text-gray-200">
+            <div className="flex items-center gap-2">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="text-blue-200"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 4H4C2.897 4 2 4.897 2 6v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 5.01-8-5.01V6h16zM4 20V8.489l7.445 4.653a1 1 0 0 0 1.11 0L20 8.489V20H4z" />
+              </svg>
+              <span>{correo}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="text-blue-200"
+                viewBox="0 0 24 24"
+              >
+                <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.24 1.01l-2.21 2.2z" />
+              </svg>
+              <span>{llamadas}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="text-blue-200"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+              </svg>
+              <span>{direccion}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="text-blue-200"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+              </svg>
+              <span>{barrio}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="text-blue-200"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+              </svg>
+              <span>Girardot - Cundinamarca</span>
+            </div>
+            <div className="flex flex-row items-center gap-2 mt-2">
+              {escudoPais ? (
+                <Image
+                  src={escudoPais}
+                  alt="Escudo País"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              ) : null}
+              {escudoDepto ? (
+                <Image
+                  src={escudoDepto}
+                  alt="Escudo Depto"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              ) : null}
+              {escudoMunicipio ? (
+                <Image
+                  src={escudoMunicipio}
+                  alt="Escudo Municipio"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              ) : null}
+              {logoIVC ? (
+                <Image
+                  src={logoIVC}
+                  alt="Logo IVC"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
+        {/* Redes Sociales */}
+        <div>
+          <h3 className="font-bold text-lg mb-2 text-[#19295A] dark:text-blue-200">
+            Redes Sociales
+          </h3>
+          <ul className="space-y-2 text-base text-gray-700 dark:text-gray-200">
+            <li className="flex items-center gap-2">
+              <svg
+                width="22"
+                height="22"
+                fill="currentColor"
+                className="text-green-400"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12.004 2.003c-5.522 0-9.997 4.475-9.997 9.997 0 1.762.464 3.484 1.346 4.997l-1.41 5.164a1 1 0 0 0 1.225 1.225l5.164-1.41a9.953 9.953 0 0 0 4.997 1.346c5.522 0 9.997-4.475 9.997-9.997s-4.475-9.997-9.997-9.997zm0 18.001a7.96 7.96 0 0 1-4.073-1.146l-.29-.172-3.067.838.822-3.008-.178-.295a7.963 7.963 0 1 1 6.786 3.783zm4.396-5.607c-.24-.12-1.418-.699-1.637-.779-.219-.08-.379-.12-.539.12-.16.24-.619.779-.759.939-.14.16-.279.18-.519.06-.24-.12-1.013-.373-1.93-1.189-.714-.637-1.197-1.426-1.338-1.666-.14-.24-.015-.369.105-.489.108-.107.24-.279.36-.419.12-.14.16-.24.24-.399.08-.16.04-.299-.02-.419-.06-.12-.539-1.299-.739-1.779-.195-.468-.393-.406-.539-.414l-.459-.008c-.16 0-.419.06-.639.299-.22.24-.839.82-.839 2 .001 1.18.859 2.318.979 2.478.12.16 1.689 2.58 4.099 3.516.574.197 1.021.314 1.37.402.575.146 1.099.125 1.51.076.461-.055 1.418-.579 1.618-1.139.2-.56.2-1.04.14-1.139-.06-.1-.22-.16-.46-.28z" />
+              </svg>
+              <a
+                href={`https://wa.me/57${llamadas.replace(/[^0-9]/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                WhatsApp
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <svg
+                width="22"
+                height="22"
+                fill="currentColor"
+                className="text-blue-400"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0" />
+              </svg>
+              <a
+                href="https://facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Facebook
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <svg
+                width="22"
+                height="22"
+                fill="currentColor"
+                className="text-pink-400"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.515 2.497 5.782 2.225 7.148 2.163 8.414 2.105 8.794 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.635.401 3.678 1.357 2.721 2.314 2.451 3.45 2.392 4.731 2.333 6.011 2.32 6.42 2.32 12c0 5.58.013 5.989.072 7.269.059 1.281.329 2.417 1.286 3.374.957.957 2.093 1.227 3.374 1.286C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.417-.329 3.374-1.286.957-.957 1.227-2.093 1.286-3.374.059-1.28.072-1.689.072-7.269 0-5.58-.013-5.989-.072-7.269-.059-1.281-.329-2.417-1.286-3.374C19.365.401 18.229.131 16.948.072 15.668.013 15.259 0 12 0z" />
+                <path d="M12 5.838A6.162 6.162 0 0 0 5.838 12 6.162 6.162 0 0 0 12 18.162 6.162 6.162 0 0 0 18.162 12 6.162 6.162 0 0 0 12 5.838zm0 10.324A4.162 4.162 0 1 1 16.162 12 4.162 4.162 0 0 1 12 16.162zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z" />
+              </svg>
+              <a
+                href="https://instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Instagram
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <svg
+                width="22"
+                height="22"
+                fill="currentColor"
+                className="text-blue-400"
+                viewBox="0 0 24 24"
+              >
+                <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.555-2.005.959-3.127 1.184-.897-.957-2.178-1.555-3.594-1.555-2.723 0-4.928 2.205-4.928 4.928 0 .39.045.765.127 1.124-4.094-.205-7.725-2.165-10.158-5.144-.424.729-.666 1.577-.666 2.476 0 1.708.87 3.216 2.188 4.099-.807-.026-1.566-.247-2.228-.616v.062c0 2.385 1.693 4.374 3.946 4.827-.413.112-.849.171-1.296.171-.317 0-.626-.03-.928-.086.627 1.956 2.444 3.377 4.6 3.417-1.68 1.318-3.808 2.105-6.102 2.105-.396 0-.787-.023-1.175-.069 2.179 1.397 4.768 2.213 7.557 2.213 9.054 0 14.002-7.496 14.002-13.986 0-.21-.006-.423-.016-.633.962-.689 1.797-1.56 2.457-2.548z" />
+              </svg>
+              <a
+                href="https://twitter.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                X
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <svg
+                width="22"
+                height="22"
+                fill="currentColor"
+                className="text-red-500"
+                viewBox="0 0 24 24"
+              >
+                <path d="M23.498 6.186a2.994 2.994 0 0 0-2.112-2.112C19.425 3.5 12 3.5 12 3.5s-7.425 0-9.386.574a2.994 2.994 0 0 0-2.112 2.112C0 8.147 0 12 0 12s0 3.853.502 5.814a2.994 2.994 0 0 0 2.112 2.112C4.575 20.5 12 20.5 12 20.5s7.425 0 9.386-.574a2.994 2.994 0 0 0 2.112-2.112C24 15.853 24 12 24 12s0-3.853-.502-5.814zM9.545 15.568V8.432l6.545 3.568-6.545 3.568z" />
+              </svg>
+              <a
+                href="https://youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Youtube
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="text-center text-xs text-[#19295A] dark:text-blue-200 mt-6">
+        © {new Date().getFullYear()} Junta de Acción Comunal. Todos los derechos
+        reservados.
+      </div>
+      <div className="text-center text-xs text-blue-400 dark:text-blue-300 mt-1">
+        Desarrollado por NextCode-Labs
       </div>
     </footer>
   );
