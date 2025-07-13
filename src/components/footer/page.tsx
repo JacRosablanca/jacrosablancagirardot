@@ -86,18 +86,10 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/mercado"
+                href="/juntadeaccioncomunal"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
-                Sobre el Mercado Comunitario
-              </a>
-            </li>
-            <li>
-              <a
-                href="/corporacion"
-                className="hover:underline text-blue-700 dark:text-blue-300"
-              >
-                Sobre la Corporación
+                Sobre la Junta de Acción Comunal
               </a>
             </li>
             <li>
@@ -106,6 +98,14 @@ export default function Footer() {
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Contacto
+              </a>
+            </li>
+            <li>
+              <a
+                href="/pqrs"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                PQRS
               </a>
             </li>
           </ul>
@@ -322,7 +322,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="text-center text-xs text-[#19295A] dark:text-blue-200 mt-6">
-        © {new Date().getFullYear()} Junta de Acción Comunal. Todos los derechos
+        © {new Date().getFullYear()} Junta de Acción Comunal del Barrio de Rosa Blanca. Todos los derechos
         reservados.
       </div>
       <div className="text-center text-xs text-blue-400 dark:text-blue-300 mt-1">
