@@ -85,6 +85,16 @@ export default function Page() {
         ¡Apoya a nuestros jóvenes y participa en la construcción de una mejor
         comunidad!
       </div>
+      <div className="mt-4 text-center">
+        <a
+          href="https://docs.google.com/forms/u/0/d/1sf7YzDJ7Nl0D_cA5yCj9GZN_FfnlxUKrn6H_DRcW9OA/preview"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full font-semibold hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+        >
+          ¡Regístrate para apoyar!
+        </a>
+      </div>
     </div>
   );
 }
