@@ -103,7 +103,7 @@ export default function Page() {
                     <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
                         Conoce a quienes apoyan esta iniciativa.
                     </div>
-                    <a href="#" className="text-blue-500 hover:text-blue-700">Ver más</a>
+                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/patrocinadores" className="text-blue-500 hover:text-blue-700">Ver más</a>
                 </div>
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4">
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">
@@ -112,7 +112,7 @@ export default function Page() {
                     <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
                         Entérate de los eventos y proyectos en curso.
                     </div>
-                    <a href="#" className="text-blue-500 hover:text-blue-700">Ver más</a>
+                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/actividades" className="text-blue-500 hover:text-blue-700">Ver más</a>
                 </div>
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4">
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">
@@ -121,7 +121,7 @@ export default function Page() {
                     <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
                         Aprende más sobre nuestra misión y visión.
                     </div>
-                    <a href="#" className="text-blue-500 hover:text-blue-700">Ver más</a>
+                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/sobre-nosotros" className="text-blue-500 hover:text-blue-700">Ver más</a>
                 </div>
             </div>
         </div>
