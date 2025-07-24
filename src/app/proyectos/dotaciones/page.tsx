@@ -65,8 +65,11 @@ function Carousel({ images }: CarouselProps) {
 
 export default function DotacionesPage() {
   const imagenes2022 = [
-    { src: "/LogoJac.png", caption: "Dotaciones entregadas en 2022" },
-    { src: "/LogoJac.png", caption: "Gestión de recursos 2022" },
+    { src: "/proyectos/dotaciones/2022/513025564_3458256860980588_3370577744616111517_n.jpg", caption: "Dotaciones entregadas en 2022" },
+    { src: "/proyectos/dotaciones/2022/513032524_3458256564313951_3865564493422950440_n.jpg", caption: "Dotaciones entregadas en 2022" },
+    { src: "/proyectos/dotaciones/2022/513083458_3458256867647254_3411503715882783737_n.jpg", caption: "Dotaciones entregadas en 2022" },
+    { src: "/proyectos/dotaciones/2022/513217117_3458256524313955_525854971563930042_n.jpg", caption: "Dotaciones entregadas en 2022" },
+    { src: "/proyectos/dotaciones/2022/513217117_3458256524313955_525854971563930042_n.jpg", caption: "Dotaciones entregadas en 2022" },
   ];
 
   const imagenes2025 = [
