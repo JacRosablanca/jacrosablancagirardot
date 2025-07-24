@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import type { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 // Imágenes Primera Fase
 import Fase1_1 from "../../../../public/proyectos/saloncomunal/primerafase/473613947_1261155588449835_4113633998159148210_n.jpg";
@@ -11,20 +10,20 @@ import Fase1_3 from "../../../../public/proyectos/saloncomunal/primerafase/51347
 import Fase1_4 from "../../../../public/proyectos/saloncomunal/primerafase/514063256_3458257587647182_4181670601262803148_n.jpg";
 import Fase1_5 from "../../../../public/proyectos/saloncomunal/primerafase/514263531_3458256904313917_2110745204252052779_n.jpg";
 
-// Imágenes Segunda Fase (renders)
+// Imágenes Segunda Fase
 import Fase2_1 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 import Fase2_2 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 import Fase2_3 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 import Fase2_4 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 import Fase2_5 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 
-// Definimos tipo de props para Carousel
+// Tipado
 type CarouselProps = {
   images: { src: StaticImageData | string; caption: string }[];
   isRender?: boolean;
 };
 
-// Carrusel reutilizable
+// Carrusel
 function Carousel({ images, isRender = false }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -53,7 +52,7 @@ function Carousel({ images, isRender = false }: CarouselProps) {
         }`}
         priority
       />
-      {/* Botones de navegación */}
+      {/* Botones */}
       <button
         onClick={prevSlide}
         className="absolute top-1/2 left-4 -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full hover:bg-opacity-60"
@@ -66,7 +65,7 @@ function Carousel({ images, isRender = false }: CarouselProps) {
       >
         &#8594;
       </button>
-      {/* Indicadores (dots) */}
+      {/* Dots */}
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {images.map((_, idx) => (
           <span
@@ -101,14 +100,18 @@ export default function SalonComunalPage() {
 
   const [activeTab, setActiveTab] = useState<"primera" | "segunda">("primera");
 
+  // URLs de carpetas embebidas
+  const docPrimeraFase =
+    "https://drive.google.com/embeddedfolderview?id=18Za-ANhlmDy66CyG7PUAdwAozNuJHK8L#grid";
+  const docSegundaFase =
+    "https://drive.google.com/embeddedfolderview?id=1clWW9W5SUQNLW1XTAzsjL8Nm2hMcsSgj#grid";
+
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
-      {/* Título principal */}
       <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
         Proyecto Salón Comunal Rosa Blanca
       </h1>
 
-      {/* Descripción */}
       <p className="text-lg text-gray-700 dark:text-gray-300 text-center mb-10">
         Nuestro salón comunal es un sueño construido entre la comunidad y con el apoyo de entidades públicas.
         Más de <span className="font-semibold">300 familias</span> del barrio serán beneficiadas con este proyecto.
@@ -138,7 +141,7 @@ export default function SalonComunalPage() {
         </button>
       </div>
 
-      {/* Carrusel según pestaña activa */}
+      {/* Carrusel */}
       {activeTab === "primera" ? (
         <Carousel images={primeraFaseImages} />
       ) : (
@@ -156,6 +159,32 @@ export default function SalonComunalPage() {
         >
           Apoya el Proyecto
         </a>
+      </div>
+
+      {/* Documentación (visor Drive) */}
+      <div className="mt-10 text-center">
+        <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
+          Documentación {activeTab === "primera" ? "Primera" : "Segunda"} Fase
+        </h2>
+
+        {/* Miniatura */}
+        <Image
+          src={
+            activeTab === "primera"
+              ? primeraFaseImages[0].src
+              : segundaFaseImages[0].src
+          }
+          alt="Miniatura de fase"
+          className="mx-auto w-64 h-40 object-cover rounded-lg shadow-md mb-6"
+        />
+
+        {/* Carpeta embebida */}
+        <iframe
+          src={activeTab === "primera" ? docPrimeraFase : docSegundaFase}
+          width="100%"
+          height="500"
+          className="border-0 rounded-lg shadow-md"
+        ></iframe>
       </div>
     </div>
   );
