@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 // Imágenes Primera Fase
 import Fase1_1 from "../../../../public/proyectos/saloncomunal/primerafase/473613947_1261155588449835_4113633998159148210_n.jpg";
@@ -19,7 +20,7 @@ import Fase2_5 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJ
 
 // Definimos tipo de props para Carousel
 type CarouselProps = {
-  images: { src: any; caption: string }[];
+  images: { src: StaticImageData | string; caption: string }[];
   isRender?: boolean;
 };
 
