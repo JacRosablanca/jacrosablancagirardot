@@ -3,9 +3,9 @@
 import Image from "next/image";
 
 // Importa las imágenes
-import Nicol from "../../../../public/cmj/nicol.jpg";
-import Kevin from "../../../../public/cmj/kevin.jpg";
-import Maria from "../../../../public/cmj/daniela.jpg";
+import Nicol from "../../../../public/proyectos/cmj/nicol.jpg";
+import Kevin from "../../../../public/proyectos/cmj/kevin.jpg";
+import Maria from "../../../../public/proyectos/cmj/daniela.jpg";
 
 export default function Page() {
     return (

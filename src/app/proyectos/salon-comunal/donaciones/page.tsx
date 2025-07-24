@@ -6,9 +6,9 @@ export default function DonacionPage() {
   const [monto, setMonto] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
 
-  // Motivo fijo de la donación
+  // Motivo fijo de la donación (actualizado)
   const motivo =
-    "Donación para apoyar a los candidatos al Consejo Municipal de Juventudes de Girardot";
+    "Donación para apoyar la construcción de la segunda fase del salón comunal";
 
   // Formatear monto con puntos de miles
   const formatNumber = (value: string) => {
