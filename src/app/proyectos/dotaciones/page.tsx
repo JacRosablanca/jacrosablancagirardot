@@ -1,0 +1,134 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+
+type CarouselProps = {
+  images: { src: string; caption: string }[];
+};
+
+function Carousel({ images }: CarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  return (
+    <div className="relative w-full h-80 md:h-[450px] overflow-hidden rounded-lg shadow-lg mb-6">
+      <Image
+        src={images[currentIndex].src}
+        alt={images[currentIndex].caption}
+        fill
+        className="object-cover transition-all duration-500"
+        priority
+      />
+      {/* Botones de navegación */}
+      <button
+        onClick={prevSlide}
+        className="absolute top-1/2 left-4 -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full hover:bg-opacity-60"
+      >
+        &#8592;
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute top-1/2 right-4 -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full hover:bg-opacity-60"
+      >
+        &#8594;
+      </button>
+      {/* Indicadores */}
+      <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+        {images.map((_, idx) => (
+          <span
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`h-3 w-3 rounded-full cursor-pointer transition ${
+              idx === currentIndex ? "bg-white" : "bg-gray-400"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function DotacionesPage() {
+  const imagenes2022 = [
+    { src: "/LogoJac.png", caption: "Dotaciones entregadas en 2022" },
+    { src: "/LogoJac.png", caption: "Gestión de recursos 2022" },
+  ];
+
+  const imagenes2025 = [
+    { src: "/LogoJac.png", caption: "Dotaciones proyectadas para 2025" },
+    { src: "/LogoJac.png", caption: "Avances en gestión 2025" },
+  ];
+
+  const [activeTab, setActiveTab] = useState<"2022" | "2025">("2022");
+
+  return (
+    <div className="max-w-5xl mx-auto py-12 px-6">
+      <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
+        Proyecto Dotaciones Comunitarias
+      </h1>
+
+      <p className="text-lg text-gray-700 dark:text-gray-300 text-center mb-10">
+        Este proyecto gestiona recursos y dotaciones para fortalecer el trabajo comunitario en Rosa Blanca.
+      </p>
+
+      {/* Tabs por año */}
+      <div className="flex justify-center space-x-4 mb-6">
+        <button
+          onClick={() => setActiveTab("2022")}
+          className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+            activeTab === "2022"
+              ? "bg-[#19295A] text-white"
+              : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          Dotaciones 2022
+        </button>
+        <button
+          onClick={() => setActiveTab("2025")}
+          className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+            activeTab === "2025"
+              ? "bg-[#19295A] text-white"
+              : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          Dotaciones 2025
+        </button>
+      </div>
+
+      {/* Carrusel dinámico */}
+      {activeTab === "2022" ? (
+        <Carousel images={imagenes2022} />
+      ) : (
+        <Carousel images={imagenes2025} />
+      )}
+
+      {/* Publicación de Facebook embebida */}
+      <div className="mt-10 text-center">
+  <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
+    Documentación del Proyecto (Drive)
+  </h2>
+  <iframe
+    src="https://drive.google.com/embeddedfolderview?id=14KFSkBjEBvSCS1KGu4QwgQ58_KIfmxtP#grid"
+    width="100%"
+    height="500"
+    className="border-0 rounded-lg shadow-md"
+  ></iframe>
+</div>
+    </div>
+  );
+}
