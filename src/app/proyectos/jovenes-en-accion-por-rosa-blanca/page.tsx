@@ -3,9 +3,9 @@
 import Image from "next/image";
 
 // Importa las imágenes
-import Nicol from "../../../../public/cmj/nicol.jpg"; // Asegúrate de que la ruta sea correcta
-import Kevin from "../../../../public/cmj/kevin.jpg"; // Asegúrate de que la ruta sea correcta
-import Maria from "../../../../public/cmj/daniela.jpg"; // Asegúrate de que la ruta sea correcta
+import Nicol from "../../../../public/cmj/nicol.jpg";
+import Kevin from "../../../../public/cmj/kevin.jpg";
+import Maria from "../../../../public/cmj/daniela.jpg";
 
 export default function Page() {
     return (
@@ -95,7 +95,9 @@ export default function Page() {
                     ¡Regístrate para apoyar!
                 </a>
             </div>
+            {/* Bloque con Patrocinadores, Actividades y Donación */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                {/* Patrocinadores */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4">
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">
                         Patrocinadores
@@ -105,6 +107,7 @@ export default function Page() {
                     </div>
                     <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/patrocinadores" className="text-blue-500 hover:text-blue-700">Ver más</a>
                 </div>
+                {/* Actividades */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4">
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">
                         Actividades
@@ -114,14 +117,15 @@ export default function Page() {
                     </div>
                     <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/actividades" className="text-blue-500 hover:text-blue-700">Ver más</a>
                 </div>
+                {/* Haz tu Donación */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4">
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">
-                        Sobre Nosotros
+                        Haz tu Donación
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
-                        Aprende más sobre nuestra misión y visión.
+                        Apoya a esta causa y ayuda a que nuestros jóvenes crezcan.
                     </div>
-                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/sobre-nosotros" className="text-blue-500 hover:text-blue-700">Ver más</a>
+                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/donaciones" className="text-blue-500 hover:text-blue-700">Donar ahora</a>
                 </div>
             </div>
         </div>
