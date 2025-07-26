@@ -71,77 +71,30 @@ export default function DotacionesPage() {
     { src: "/proyectos/dotaciones/2022/513217117_3458256524313955_525854971563930042_n.jpg", caption: "Dotaciones entregadas en 2022" },
   ];
 
-  const imagenes2025 = [
-    { src: "/LogoJac.png", caption: "Dotaciones proyectadas para 2025" },
-    { src: "/LogoJac.png", caption: "Avances en gestión 2025" },
-  ];
-
-  const [activeTab, setActiveTab] = useState<"2022" | "2025">("2022");
   const [activeDocTab, setActiveDocTab] = useState<"documentacion" | "rendicion">("documentacion");
 
-  // URLs para cada año y cada tipo de contenido
   const docLinks = {
-    "2022": {
-      documentacion: "https://drive.google.com/embeddedfolderview?id=1E5uJ7ctFGI4Z92_rkEsTFZMzxflz3zph#grid",
-      rendicion: "https://drive.google.com/embeddedfolderview?id=1doYbQs-q4yLa-E5e4oYTOb75GKmd_F7E#grid",
-    },
-    "2025": {
-      documentacion: "https://drive.google.com/embeddedfolderview?id=11XkQWP_OuArkcoFpAm27s_ASfV2H76Le#grid",
-      rendicion: "https://drive.google.com/embeddedfolderview?id=1ucxrOjHzJ5KhS8XhP5wCOF9DZvNVTfRx#grid",
-    },
+    documentacion: "https://drive.google.com/embeddedfolderview?id=1E5uJ7ctFGI4Z92_rkEsTFZMzxflz3zph#grid",
+    rendicion: "https://drive.google.com/embeddedfolderview?id=1doYbQs-q4yLa-E5e4oYTOb75GKmd_F7E#grid",
   };
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
       <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
-        Proyecto Dotaciones Comunitarias
+        Proyecto Dotaciones Comunitarias (2022)
       </h1>
 
       <p className="text-lg text-gray-700 dark:text-gray-300 text-center mb-10">
-        Este proyecto gestiona recursos y dotaciones para fortalecer el trabajo comunitario en Rosa Blanca.
+        Este proyecto gestionó recursos y dotaciones en 2022 para fortalecer el trabajo comunitario en Rosa Blanca.
       </p>
 
-      {/* Tabs por año */}
-      <div className="flex justify-center space-x-4 mb-6">
-        <button
-          onClick={() => {
-            setActiveTab("2022");
-            setActiveDocTab("documentacion");
-          }}
-          className={`px-4 py-2 rounded-full font-semibold transition-colors ${
-            activeTab === "2022"
-              ? "bg-[#19295A] text-white"
-              : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
-          }`}
-        >
-          Dotaciones 2022
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab("2025");
-            setActiveDocTab("documentacion");
-          }}
-          className={`px-4 py-2 rounded-full font-semibold transition-colors ${
-            activeTab === "2025"
-              ? "bg-[#19295A] text-white"
-              : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
-          }`}
-        >
-          Dotaciones 2025
-        </button>
-      </div>
-
-      {/* Carrusel dinámico */}
-      {activeTab === "2022" ? (
-        <Carousel images={imagenes2022} />
-      ) : (
-        <Carousel images={imagenes2025} />
-      )}
+      {/* Carrusel de imágenes 2022 */}
+      <Carousel images={imagenes2022} />
 
       {/* Documentación y Rendición */}
       <div className="mt-10 text-center">
         <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
-          Documentación del Proyecto ({activeTab})
+          Documentación del Proyecto 2022
         </h2>
 
         {/* Botones para cambiar vista */}
@@ -168,9 +121,9 @@ export default function DotacionesPage() {
           </button>
         </div>
 
-        {/* Contenido dinámico según año y botón */}
+        {/* Contenido dinámico */}
         <iframe
-          src={docLinks[activeTab][activeDocTab]}
+          src={docLinks[activeDocTab]}
           width="100%"
           height="500"
           className="border-0 rounded-lg shadow-md"
