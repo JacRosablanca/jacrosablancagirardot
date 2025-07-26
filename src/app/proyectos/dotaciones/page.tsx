@@ -69,7 +69,6 @@ export default function DotacionesPage() {
     { src: "/proyectos/dotaciones/2022/513032524_3458256564313951_3865564493422950440_n.jpg", caption: "Dotaciones entregadas en 2022" },
     { src: "/proyectos/dotaciones/2022/513083458_3458256867647254_3411503715882783737_n.jpg", caption: "Dotaciones entregadas en 2022" },
     { src: "/proyectos/dotaciones/2022/513217117_3458256524313955_525854971563930042_n.jpg", caption: "Dotaciones entregadas en 2022" },
-    { src: "/proyectos/dotaciones/2022/513217117_3458256524313955_525854971563930042_n.jpg", caption: "Dotaciones entregadas en 2022" },
   ];
 
   const imagenes2025 = [
@@ -78,6 +77,19 @@ export default function DotacionesPage() {
   ];
 
   const [activeTab, setActiveTab] = useState<"2022" | "2025">("2022");
+  const [activeDocTab, setActiveDocTab] = useState<"documentacion" | "rendicion">("documentacion");
+
+  // URLs para cada año y cada tipo de contenido
+  const docLinks = {
+    "2022": {
+      documentacion: "https://drive.google.com/embeddedfolderview?id=1E5uJ7ctFGI4Z92_rkEsTFZMzxflz3zph#grid",
+      rendicion: "https://drive.google.com/embeddedfolderview?id=1doYbQs-q4yLa-E5e4oYTOb75GKmd_F7E#grid",
+    },
+    "2025": {
+      documentacion: "https://drive.google.com/embeddedfolderview?id=11XkQWP_OuArkcoFpAm27s_ASfV2H76Le#grid",
+      rendicion: "https://drive.google.com/embeddedfolderview?id=1ucxrOjHzJ5KhS8XhP5wCOF9DZvNVTfRx#grid",
+    },
+  };
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
@@ -92,7 +104,10 @@ export default function DotacionesPage() {
       {/* Tabs por año */}
       <div className="flex justify-center space-x-4 mb-6">
         <button
-          onClick={() => setActiveTab("2022")}
+          onClick={() => {
+            setActiveTab("2022");
+            setActiveDocTab("documentacion");
+          }}
           className={`px-4 py-2 rounded-full font-semibold transition-colors ${
             activeTab === "2022"
               ? "bg-[#19295A] text-white"
@@ -102,7 +117,10 @@ export default function DotacionesPage() {
           Dotaciones 2022
         </button>
         <button
-          onClick={() => setActiveTab("2025")}
+          onClick={() => {
+            setActiveTab("2025");
+            setActiveDocTab("documentacion");
+          }}
           className={`px-4 py-2 rounded-full font-semibold transition-colors ${
             activeTab === "2025"
               ? "bg-[#19295A] text-white"
@@ -120,18 +138,44 @@ export default function DotacionesPage() {
         <Carousel images={imagenes2025} />
       )}
 
-      {/* Publicación de Facebook embebida */}
+      {/* Documentación y Rendición */}
       <div className="mt-10 text-center">
-  <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
-    Documentación del Proyecto (Drive)
-  </h2>
-  <iframe
-    src="https://drive.google.com/embeddedfolderview?id=14KFSkBjEBvSCS1KGu4QwgQ58_KIfmxtP#grid"
-    width="100%"
-    height="500"
-    className="border-0 rounded-lg shadow-md"
-  ></iframe>
-</div>
+        <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
+          Documentación del Proyecto ({activeTab})
+        </h2>
+
+        {/* Botones para cambiar vista */}
+        <div className="flex justify-center space-x-4 mb-4">
+          <button
+            onClick={() => setActiveDocTab("documentacion")}
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+              activeDocTab === "documentacion"
+                ? "bg-[#19295A] text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            Documentación
+          </button>
+          <button
+            onClick={() => setActiveDocTab("rendicion")}
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+              activeDocTab === "rendicion"
+                ? "bg-[#19295A] text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            Rendición de Cuentas
+          </button>
+        </div>
+
+        {/* Contenido dinámico según año y botón */}
+        <iframe
+          src={docLinks[activeTab][activeDocTab]}
+          width="100%"
+          height="500"
+          className="border-0 rounded-lg shadow-md"
+        ></iframe>
+      </div>
     </div>
   );
 }

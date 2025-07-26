@@ -17,13 +17,12 @@ import Fase2_3 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJ
 import Fase2_4 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 import Fase2_5 from "../../../../public/proyectos/saloncomunal/segundafase/LogoJac.png";
 
-// Tipado
+// Carrusel
 type CarouselProps = {
   images: { src: StaticImageData | string; caption: string }[];
   isRender?: boolean;
 };
 
-// Carrusel
 function Carousel({ images, isRender = false }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -99,12 +98,18 @@ export default function SalonComunalPage() {
   ];
 
   const [activeTab, setActiveTab] = useState<"primera" | "segunda">("primera");
+  const [activeDocTab, setActiveDocTab] = useState<"documentacion" | "rendicion">("documentacion");
 
-  // URLs de carpetas embebidas
-  const docPrimeraFase =
-    "https://drive.google.com/embeddedfolderview?id=18Za-ANhlmDy66CyG7PUAdwAozNuJHK8L#grid";
-  const docSegundaFase =
-    "https://drive.google.com/embeddedfolderview?id=1clWW9W5SUQNLW1XTAzsjL8Nm2hMcsSgj#grid";
+  const docLinks = {
+    primera: {
+      documentacion: "https://drive.google.com/embeddedfolderview?id=1jVivqMlMGJ10GZ4QA4hxsT2x829Zhlok#grid",
+      rendicion: "https://drive.google.com/embeddedfolderview?id=1wIdqh5vUFq4q2P83BQhefYjOs27vGoQdos#grid",
+    },
+    segunda: {
+      documentacion: "https://drive.google.com/embeddedfolderview?id=1MQPczCU_HgTz1SmE_zBpNJn5APfuPgzN#grid",
+      rendicion: "https://drive.google.com/embeddedfolderview?id=1nmTiTQI9KdbquNYl7Vc20_Gai2bs5cqsiete#grid",
+    },
+  };
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
@@ -117,10 +122,13 @@ export default function SalonComunalPage() {
         Más de <span className="font-semibold">300 familias</span> del barrio serán beneficiadas con este proyecto.
       </p>
 
-      {/* Tabs */}
+      {/* Tabs de fase */}
       <div className="flex justify-center space-x-4 mb-6">
         <button
-          onClick={() => setActiveTab("primera")}
+          onClick={() => {
+            setActiveTab("primera");
+            setActiveDocTab("documentacion");
+          }}
           className={`px-4 py-2 rounded-full font-semibold transition-colors ${
             activeTab === "primera"
               ? "bg-[#19295A] text-white"
@@ -130,7 +138,10 @@ export default function SalonComunalPage() {
           Primera Fase
         </button>
         <button
-          onClick={() => setActiveTab("segunda")}
+          onClick={() => {
+            setActiveTab("segunda");
+            setActiveDocTab("documentacion");
+          }}
           className={`px-4 py-2 rounded-full font-semibold transition-colors ${
             activeTab === "segunda"
               ? "bg-[#19295A] text-white"
@@ -148,39 +159,39 @@ export default function SalonComunalPage() {
         <Carousel images={segundaFaseImages} isRender />
       )}
 
-      {/* Botón de donación */}
-      <div className="text-center mt-8">
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-          Con tu apoyo, lograremos culminar el Salón Comunal Rosa Blanca para todos.
-        </p>
-        <a
-          href="/proyectos/salon-comunal/donaciones"
-          className="px-6 py-3 bg-[#19295A] text-white text-lg font-semibold rounded-full hover:bg-[#1f3a7a] transition-colors"
-        >
-          Apoya el Proyecto
-        </a>
-      </div>
-
-      {/* Documentación (visor Drive) */}
+      {/* Documentación y Rendición */}
       <div className="mt-10 text-center">
         <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-4">
           Documentación {activeTab === "primera" ? "Primera" : "Segunda"} Fase
         </h2>
 
-        {/* Miniatura */}
-        <Image
-          src={
-            activeTab === "primera"
-              ? primeraFaseImages[0].src
-              : segundaFaseImages[0].src
-          }
-          alt="Miniatura de fase"
-          className="mx-auto w-64 h-40 object-cover rounded-lg shadow-md mb-6"
-        />
+        {/* Botones de vista */}
+        <div className="flex justify-center space-x-4 mb-4">
+          <button
+            onClick={() => setActiveDocTab("documentacion")}
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+              activeDocTab === "documentacion"
+                ? "bg-[#19295A] text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            Documentación
+          </button>
+          <button
+            onClick={() => setActiveDocTab("rendicion")}
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+              activeDocTab === "rendicion"
+                ? "bg-[#19295A] text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            Rendición de Cuentas
+          </button>
+        </div>
 
-        {/* Carpeta embebida */}
+        {/* Iframe dinámico */}
         <iframe
-          src={activeTab === "primera" ? docPrimeraFase : docSegundaFase}
+          src={docLinks[activeTab][activeDocTab]}
           width="100%"
           height="500"
           className="border-0 rounded-lg shadow-md"
