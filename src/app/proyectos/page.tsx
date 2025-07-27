@@ -17,14 +17,9 @@ export default function ProyectosPage() {
   ];
 
   const [categoria, setCategoria] = useState<string | null>(null);
-  const [anioFiltro, setAnioFiltro] = useState<number | null>(null);
-
-  const aniosDisponibles = [2022, 2023, 2024, 2025, 2026];
 
   const proyectosFiltrados = proyectos.filter((p) => {
-    const coincideCategoria = categoria ? p.estado === categoria : true;
-    const coincideAnio = anioFiltro ? p.anio === anioFiltro : true;
-    return coincideCategoria && coincideAnio;
+    return categoria ? p.estado === categoria : true;
   });
 
   return (
@@ -33,28 +28,57 @@ export default function ProyectosPage() {
         Historial de Proyectos Comunitarios
       </h1>
 
-      <div className="flex justify-center flex-wrap gap-3 mb-6">
-        { ["ejecutado", "postulado", "rechazado"].map((cat) => (
-          <button key={cat} onClick={() => setCategoria(categoria === cat ? null : cat)} className={`px-4 py-2 rounded-full font-semibold transition-colors ${categoria === cat ? "bg-[#19295A] text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"}`}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
-        )) }
+      {/* Botones de categorías */}
+      <div className="flex justify-center flex-wrap gap-3 mb-8">
+        {["ejecutado", "postulado", "rechazado"].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategoria(categoria === cat ? null : cat)}
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+              categoria === cat
+                ? "bg-[#19295A] text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+          </button>
+        ))}
       </div>
 
-      <div className="flex justify-center flex-wrap gap-3 mb-10">
-        { aniosDisponibles.map((anio) => (
-          <button key={anio} onClick={() => setAnioFiltro(anioFiltro === anio ? null : anio)} className={`px-4 py-2 rounded-full font-semibold transition-colors ${anioFiltro === anio ? "bg-[#19295A] text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"}`}>{anio}</button>
-        )) }
-      </div>
-
+      {/* Tarjetas de proyectos */}
       <div className="flex flex-wrap justify-center gap-8">
         {proyectosFiltrados.map((proyecto, idx) => (
-          <div key={idx} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs">
-            <Image src={proyecto.imagen} alt={proyecto.titulo} width={800} height={400} className="w-full h-56 object-cover" />
+          <div
+            key={idx}
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs"
+          >
+            <Image
+              src={proyecto.imagen}
+              alt={proyecto.titulo}
+              width={800}
+              height={400}
+              className="w-full h-56 object-cover"
+            />
             <div className="p-6 flex flex-col gap-3">
-              <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-2">{proyecto.titulo}</h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">{proyecto.descripcion}</p>
+              <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300 mb-2">
+                {proyecto.titulo}
+              </h2>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                {proyecto.descripcion}
+              </p>
               <div className="flex gap-4">
-                <Link href={proyecto.enlace} className="flex-1 text-center px-4 py-2 bg-[#19295A] text-white rounded-lg hover:bg-[#1f3a7a] transition-colors">Ver más</Link>
-                <Link href={proyecto.doc} className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">Documentación</Link>
+                <Link
+                  href={proyecto.enlace}
+                  className="flex-1 text-center px-4 py-2 bg-[#19295A] text-white rounded-lg hover:bg-[#1f3a7a] transition-colors"
+                >
+                  Ver más
+                </Link>
+                <Link
+                  href={proyecto.doc}
+                  className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  Documentación
+                </Link>
               </div>
             </div>
           </div>
