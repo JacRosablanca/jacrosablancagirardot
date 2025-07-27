@@ -8,7 +8,6 @@ type Proyecto = {
   titulo: string;
   anio: string;
   estado: string;
-  descripcion: string;
   doc: string;
   rendicion?: string;
   fotos: string[];
@@ -22,6 +21,16 @@ export default function ProyectosPage() {
   const SHEET_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwtuU0FppmVmUZr3jILmaeLoSxL3VWrAd594QXl3xSUbPMPQMTur03gTKVq-equTQTjrvH8tJ3krrZ/pub?gid=0&single=true&output=csv";
 
+  // Limpia celdas con errores tipo #NAME? o #REF!
+  const cleanCell = (value: string): string => {
+    if (!value) return "";
+    if (/^#(NAME|REF|VALUE|DIV|N\/A)[!?/]*/i.test(value)) {
+      return "";
+    }
+    return value.trim();
+  };
+
+  // Parser CSV robusto (respeta comillas y saltos de línea)
   const parseCSV = (text: string): string[][] => {
     const rows: string[][] = [];
     let currentRow: string[] = [];
@@ -70,19 +79,13 @@ export default function ProyectosPage() {
         const data: Proyecto[] = parsedRows.map((cols) => {
           const rowObj: Record<string, string> = {};
           headers.forEach((header, idx) => {
-            rowObj[header.trim()] = cols[idx]?.trim() || "";
+            rowObj[header.trim()] = cleanCell(cols[idx] || "");
           });
-
-          let descripcion = rowObj["DESCRIPCION"] || "Sin descripción disponible.";
-          if (descripcion.includes("#NAME?")) {
-            descripcion = "Sin descripción disponible.";
-          }
 
           return {
             titulo: rowObj["NOMBRE DEL PROYECTO"] || "Proyecto sin nombre",
             anio: rowObj["AÑO"] || "",
-            estado: (rowObj["ESTADO"] || "").toLowerCase().trim(),
-            descripcion,
+            estado: (rowObj["ESTADO"] || "desconocido").toLowerCase().trim(),
             doc: rowObj["DOCUMENTACION"] || "#",
             rendicion: rowObj["RENDICION"] || "",
             fotos: [
@@ -140,6 +143,7 @@ export default function ProyectosPage() {
         Historial de Proyectos Comunitarios
       </h1>
 
+      {/* Botones de filtro */}
       <div className="flex justify-center flex-wrap gap-3 mb-8">
         {["ejecutado", "postulado", "rechazado"].map((cat) => (
           <button
@@ -156,12 +160,14 @@ export default function ProyectosPage() {
         ))}
       </div>
 
+      {/* Tarjetas de proyectos */}
       <div className="flex flex-wrap justify-center gap-8">
         {proyectosFiltrados.map((proyecto, idx) => (
           <div
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs"
           >
+            {/* Carrusel */}
             <div className="relative w-full h-56">
               {proyecto.fotos.length > 0 ? (
                 <Image
@@ -183,17 +189,13 @@ export default function ProyectosPage() {
               {proyecto.fotos.length > 1 && (
                 <>
                   <button
-                    onClick={() =>
-                      handlePrevImage(idx, proyecto.fotos.length)
-                    }
+                    onClick={() => handlePrevImage(idx, proyecto.fotos.length)}
                     className="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600"
                   >
                     ◀
                   </button>
                   <button
-                    onClick={() =>
-                      handleNextImage(idx, proyecto.fotos.length)
-                    }
+                    onClick={() => handleNextImage(idx, proyecto.fotos.length)}
                     className="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600"
                   >
                     ▶
@@ -202,6 +204,7 @@ export default function ProyectosPage() {
               )}
             </div>
 
+            {/* Info */}
             <div className="p-6 flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300">
                 {proyecto.titulo}
@@ -219,10 +222,6 @@ export default function ProyectosPage() {
                   proyecto.estado.slice(1)}
               </span>
 
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                {proyecto.descripcion}
-              </p>
-
               <div className="flex gap-4">
                 <Link
                   href={proyecto.doc}
@@ -237,7 +236,7 @@ export default function ProyectosPage() {
                     target="_blank"
                     className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
                   >
-                    Rendición de Cuentas
+                    Inversión
                   </Link>
                 )}
               </div>
