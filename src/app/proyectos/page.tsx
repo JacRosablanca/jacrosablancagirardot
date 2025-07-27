@@ -108,6 +108,7 @@ export default function ProyectosPage() {
     categoria ? p.estado === categoria : true
   );
 
+  // Asigna colores según estado (incluyendo "en proceso" en naranja)
   const getEstadoColor = (estado: string) => {
     switch (estado) {
       case "ejecutado":
@@ -116,10 +117,19 @@ export default function ProyectosPage() {
         return "bg-yellow-500";
       case "rechazado":
         return "bg-red-500";
+      case "en proceso":
+        return "bg-orange-500"; // Aquí color naranja
       default:
         return "bg-gray-400";
     }
   };
+
+  // Convierte "en proceso" en "En Proceso"
+  const formatEstado = (estado: string) =>
+    estado
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
 
   const handlePrevImage = (index: number, total: number) => {
     setCurrentImageIndex((prev) => {
@@ -145,7 +155,7 @@ export default function ProyectosPage() {
 
       {/* Botones de filtro */}
       <div className="flex justify-center flex-wrap gap-3 mb-8">
-        {["ejecutado", "postulado", "rechazado"].map((cat) => (
+        {["ejecutado", "postulado", "rechazado", "en proceso"].map((cat) => (
           <button
             key={cat}
             onClick={() => setCategoria(categoria === cat ? null : cat)}
@@ -155,7 +165,7 @@ export default function ProyectosPage() {
                 : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
             }`}
           >
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            {formatEstado(cat)}
           </button>
         ))}
       </div>
@@ -218,8 +228,7 @@ export default function ProyectosPage() {
                   proyecto.estado
                 )}`}
               >
-                {proyecto.estado.charAt(0).toUpperCase() +
-                  proyecto.estado.slice(1)}
+                {formatEstado(proyecto.estado)}
               </span>
 
               <div className="flex gap-4">
