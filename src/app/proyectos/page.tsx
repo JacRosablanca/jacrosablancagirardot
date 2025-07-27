@@ -10,45 +10,81 @@ type Proyecto = {
   estado: string;
   descripcion: string;
   doc: string;
+  rendicion?: string;
   fotos: string[];
 };
 
 export default function ProyectosPage() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
   const [categoria, setCategoria] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number[]>([]);
 
   const SHEET_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwtuU0FppmVmUZr3jILmaeLoSxL3VWrAd594QXl3xSUbPMPQMTur03gTKVq-equTQTjrvH8tJ3krrZ/pub?gid=0&single=true&output=csv";
+
+  const parseCSV = (text: string): string[][] => {
+    const rows: string[][] = [];
+    let currentRow: string[] = [];
+    let currentValue = "";
+    let insideQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const nextChar = text[i + 1];
+
+      if (char === '"' && !insideQuotes) {
+        insideQuotes = true;
+      } else if (char === '"' && insideQuotes && nextChar === '"') {
+        currentValue += '"';
+        i++;
+      } else if (char === '"' && insideQuotes) {
+        insideQuotes = false;
+      } else if (char === "," && !insideQuotes) {
+        currentRow.push(currentValue);
+        currentValue = "";
+      } else if (char === "\n" && !insideQuotes) {
+        currentRow.push(currentValue);
+        rows.push(currentRow);
+        currentRow = [];
+        currentValue = "";
+      } else {
+        currentValue += char;
+      }
+    }
+
+    if (currentValue || currentRow.length > 0) {
+      currentRow.push(currentValue);
+      rows.push(currentRow);
+    }
+
+    return rows;
+  };
 
   useEffect(() => {
     fetch(SHEET_URL)
       .then((res) => res.text())
       .then((csvText) => {
-        const rows = csvText
-          .split("\n")
-          .filter((line) => line.trim() !== "");
+        const parsedRows = parseCSV(csvText);
+        const headers = parsedRows.shift() || [];
 
-        const headers = rows.shift()?.split(",") || [];
-
-        const data: Proyecto[] = rows.map((row) => {
-          // Parser robusto: soporta comillas, comas y saltos de línea
-          const cols =
-            row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map((c) =>
-              c.replace(/^"|"$/g, "")
-            ) || [];
-
+        const data: Proyecto[] = parsedRows.map((cols) => {
           const rowObj: Record<string, string> = {};
           headers.forEach((header, idx) => {
             rowObj[header.trim()] = cols[idx]?.trim() || "";
           });
 
+          let descripcion = rowObj["DESCRIPCION"] || "Sin descripción disponible.";
+          if (descripcion.includes("#NAME?")) {
+            descripcion = "Sin descripción disponible.";
+          }
+
           return {
             titulo: rowObj["NOMBRE DEL PROYECTO"] || "Proyecto sin nombre",
             anio: rowObj["AÑO"] || "",
             estado: (rowObj["ESTADO"] || "").toLowerCase().trim(),
-            descripcion:
-              rowObj["DESCRIPCION"]?.trim() || "Sin descripción disponible.",
+            descripcion,
             doc: rowObj["DOCUMENTACION"] || "#",
+            rendicion: rowObj["RENDICION"] || "",
             fotos: [
               rowObj["FOTO 1"],
               rowObj["FOTO 2"],
@@ -60,6 +96,7 @@ export default function ProyectosPage() {
         });
 
         setProyectos(data);
+        setCurrentImageIndex(new Array(data.length).fill(0));
       })
       .catch((err) => console.error("Error cargando hoja:", err));
   }, []);
@@ -81,54 +118,21 @@ export default function ProyectosPage() {
     }
   };
 
-  function Carrusel({ imagenes }: { imagenes: string[] }) {
-    const [index, setIndex] = useState(0);
+  const handlePrevImage = (index: number, total: number) => {
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[index] = (prev[index] - 1 + total) % total;
+      return newIndexes;
+    });
+  };
 
-    const prev = () =>
-      setIndex((prev) => (prev === 0 ? imagenes.length - 1 : prev - 1));
-    const next = () =>
-      setIndex((prev) => (prev === imagenes.length - 1 ? 0 : prev + 1));
-
-    if (!imagenes.length) {
-      return (
-        <Image
-          src="/LogoJac.png"
-          alt="Logo"
-          width={800}
-          height={400}
-          className="w-full h-56 object-cover"
-        />
-      );
-    }
-
-    return (
-      <div className="relative w-full h-56">
-        <Image
-          src={imagenes[index]}
-          alt={`Imagen ${index + 1}`}
-          width={800}
-          height={400}
-          className="w-full h-56 object-cover"
-        />
-        {imagenes.length > 1 && (
-          <>
-            <button
-              onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full px-2 py-1"
-            >
-              ◀
-            </button>
-            <button
-              onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full px-2 py-1"
-            >
-              ▶
-            </button>
-          </>
-        )}
-      </div>
-    );
-  }
+  const handleNextImage = (index: number, total: number) => {
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[index] = (prev[index] + 1) % total;
+      return newIndexes;
+    });
+  };
 
   return (
     <div className="max-w-6xl mx-auto py-12 px-6">
@@ -158,12 +162,51 @@ export default function ProyectosPage() {
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs"
           >
-            <Carrusel imagenes={proyecto.fotos} />
+            <div className="relative w-full h-56">
+              {proyecto.fotos.length > 0 ? (
+                <Image
+                  src={proyecto.fotos[currentImageIndex[idx]]}
+                  alt={proyecto.titulo}
+                  width={800}
+                  height={400}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Image
+                  src="/LogoJac.png"
+                  alt={proyecto.titulo}
+                  width={800}
+                  height={400}
+                  className="w-full h-full object-cover"
+                />
+              )}
+              {proyecto.fotos.length > 1 && (
+                <>
+                  <button
+                    onClick={() =>
+                      handlePrevImage(idx, proyecto.fotos.length)
+                    }
+                    className="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600"
+                  >
+                    ◀
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleNextImage(idx, proyecto.fotos.length)
+                    }
+                    className="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600"
+                  >
+                    ▶
+                  </button>
+                </>
+              )}
+            </div>
+
             <div className="p-6 flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300">
-                {proyecto.titulo}{" "}
-                {proyecto.anio && (
-                  <span className="text-gray-500">({proyecto.anio})</span>
+                {proyecto.titulo}
+                {!proyecto.titulo.includes(proyecto.anio) && proyecto.anio && (
+                  <span className="text-gray-500"> ({proyecto.anio})</span>
                 )}
               </h2>
 
@@ -182,18 +225,21 @@ export default function ProyectosPage() {
 
               <div className="flex gap-4">
                 <Link
-                  href="#"
-                  className="flex-1 text-center px-4 py-2 bg-[#19295A] text-white rounded-lg hover:bg-[#1f3a7a] transition-colors"
-                >
-                  Ver más
-                </Link>
-                <Link
                   href={proyecto.doc}
                   target="_blank"
-                  className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                  className="flex-1 text-center px-4 py-2 bg-[#19295A] text-white rounded-lg hover:bg-[#1f3a7a] transition-colors"
                 >
                   Documentación
                 </Link>
+                {proyecto.rendicion && (
+                  <Link
+                    href={proyecto.rendicion}
+                    target="_blank"
+                    className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Rendición de Cuentas
+                  </Link>
+                )}
               </div>
             </div>
           </div>
