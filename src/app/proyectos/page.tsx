@@ -24,30 +24,30 @@ export default function ProyectosPage() {
     fetch(SHEET_URL)
       .then((res) => res.text())
       .then((csvText) => {
-        const rows = csvText.split("\n").filter(Boolean);
+        const rows = csvText
+          .split("\n")
+          .filter((line) => line.trim() !== "");
+
         const headers = rows.shift()?.split(",") || [];
 
         const data: Proyecto[] = rows.map((row) => {
-          const cols = row.split(",");
+          // Parser robusto: soporta comillas, comas y saltos de línea
+          const cols =
+            row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map((c) =>
+              c.replace(/^"|"$/g, "")
+            ) || [];
+
           const rowObj: Record<string, string> = {};
           headers.forEach((header, idx) => {
             rowObj[header.trim()] = cols[idx]?.trim() || "";
           });
 
-          const estadoNormalizado = (rowObj["ESTADO"] || "")
-            .toLowerCase()
-            .trim();
-
-          const descripcionLimpia =
-            rowObj["DESCRIPCION"]?.startsWith("#") || !rowObj["DESCRIPCION"]
-              ? "Sin descripción disponible."
-              : rowObj["DESCRIPCION"];
-
           return {
             titulo: rowObj["NOMBRE DEL PROYECTO"] || "Proyecto sin nombre",
             anio: rowObj["AÑO"] || "",
-            estado: estadoNormalizado,
-            descripcion: descripcionLimpia,
+            estado: (rowObj["ESTADO"] || "").toLowerCase().trim(),
+            descripcion:
+              rowObj["DESCRIPCION"]?.trim() || "Sin descripción disponible.",
             doc: rowObj["DOCUMENTACION"] || "#",
             fotos: [
               rowObj["FOTO 1"],
@@ -81,6 +81,55 @@ export default function ProyectosPage() {
     }
   };
 
+  function Carrusel({ imagenes }: { imagenes: string[] }) {
+    const [index, setIndex] = useState(0);
+
+    const prev = () =>
+      setIndex((prev) => (prev === 0 ? imagenes.length - 1 : prev - 1));
+    const next = () =>
+      setIndex((prev) => (prev === imagenes.length - 1 ? 0 : prev + 1));
+
+    if (!imagenes.length) {
+      return (
+        <Image
+          src="/LogoJac.png"
+          alt="Logo"
+          width={800}
+          height={400}
+          className="w-full h-56 object-cover"
+        />
+      );
+    }
+
+    return (
+      <div className="relative w-full h-56">
+        <Image
+          src={imagenes[index]}
+          alt={`Imagen ${index + 1}`}
+          width={800}
+          height={400}
+          className="w-full h-56 object-cover"
+        />
+        {imagenes.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full px-2 py-1"
+            >
+              ◀
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full px-2 py-1"
+            >
+              ▶
+            </button>
+          </>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto py-12 px-6">
       <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
@@ -109,18 +158,12 @@ export default function ProyectosPage() {
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs"
           >
-            <Image
-              src={proyecto.fotos[0] || "/LogoJac.png"}
-              alt={proyecto.titulo}
-              width={800}
-              height={400}
-              className="w-full h-56 object-cover"
-            />
+            <Carrusel imagenes={proyecto.fotos} />
             <div className="p-6 flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300">
-                {proyecto.titulo}
-                {!proyecto.titulo.includes(proyecto.anio) && proyecto.anio && (
-                  <span className="text-gray-500"> ({proyecto.anio})</span>
+                {proyecto.titulo}{" "}
+                {proyecto.anio && (
+                  <span className="text-gray-500">({proyecto.anio})</span>
                 )}
               </h2>
 
