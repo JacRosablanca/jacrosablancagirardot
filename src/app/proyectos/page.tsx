@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -108,7 +107,6 @@ export default function ProyectosPage() {
     categoria ? p.estado === categoria : true
   );
 
-  // Asigna colores según estado (incluyendo "en proceso" en naranja)
   const getEstadoColor = (estado: string) => {
     switch (estado) {
       case "ejecutado":
@@ -118,13 +116,12 @@ export default function ProyectosPage() {
       case "rechazado":
         return "bg-red-500";
       case "en proceso":
-        return "bg-orange-500"; // Aquí color naranja
+        return "bg-orange-500";
       default:
         return "bg-gray-400";
     }
   };
 
-  // Convierte "en proceso" en "En Proceso"
   const formatEstado = (estado: string) =>
     estado
       .split(" ")
@@ -153,7 +150,6 @@ export default function ProyectosPage() {
         Historial de Proyectos Comunitarios
       </h1>
 
-      {/* Botones de filtro */}
       <div className="flex justify-center flex-wrap gap-3 mb-8">
         {["ejecutado", "postulado", "rechazado", "en proceso"].map((cat) => (
           <button
@@ -170,14 +166,12 @@ export default function ProyectosPage() {
         ))}
       </div>
 
-      {/* Tarjetas de proyectos */}
       <div className="flex flex-wrap justify-center gap-8">
         {proyectosFiltrados.map((proyecto, idx) => (
           <div
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition max-w-xs"
           >
-            {/* Carrusel */}
             <div className="relative w-full h-56">
               {proyecto.fotos.length > 0 ? (
                 <Image
@@ -214,7 +208,6 @@ export default function ProyectosPage() {
               )}
             </div>
 
-            {/* Info */}
             <div className="p-6 flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-[#19295A] dark:text-blue-300">
                 {proyecto.titulo}
@@ -231,7 +224,7 @@ export default function ProyectosPage() {
                 {formatEstado(proyecto.estado)}
               </span>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-2">
                 <Link
                   href={proyecto.doc}
                   target="_blank"
@@ -246,6 +239,15 @@ export default function ProyectosPage() {
                     className="flex-1 text-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
                   >
                     Inversión
+                  </Link>
+                )}
+                {proyecto.titulo.trim().toLowerCase() ===
+                  "jóvenes en acción por rosa blanca. cmj" && (
+                  <Link
+                    href="/proyectos/jovenes-en-accion-por-rosa-blanca"
+                    className="flex-1 text-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Ver Sitio
                   </Link>
                 )}
               </div>
