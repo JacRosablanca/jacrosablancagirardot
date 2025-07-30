@@ -3,10 +3,10 @@
 import Image from "next/image";
 
 // Imágenes
-import Nicol from "@/public/proyectos/cmj/nicol.jpg";
-import Kevin from "@/public/proyectos/cmj/kevin.jpg";
-import Maria from "@/public/proyectos/cmj/daniela.jpg";
-import Portada from "@/public/proyectos/cmj/equipo.jpg";
+import Nicol from "/proyectos/cmj/nicol.jpg";
+import Kevin from "/proyectos/cmj/kevin.jpg";
+import Maria from "/proyectos/cmj/daniela.jpg";
+import Portada from "/proyectos/cmj/equipo.jpg";
 
 export default function Page() {
     return (
