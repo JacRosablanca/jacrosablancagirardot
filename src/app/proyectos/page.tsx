@@ -7,6 +7,7 @@ type Proyecto = {
   titulo: string;
   anio: string;
   estado: string;
+  web: string;
   doc: string;
   rendicion?: string;
   fotos: string[];
@@ -20,7 +21,6 @@ export default function ProyectosPage() {
   const SHEET_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwtuU0FppmVmUZr3jILmaeLoSxL3VWrAd594QXl3xSUbPMPQMTur03gTKVq-equTQTjrvH8tJ3krrZ/pub?gid=0&single=true&output=csv";
 
-  // Limpia celdas con errores tipo #NAME? o #REF!
   const cleanCell = (value: string): string => {
     if (!value) return "";
     if (/^#(NAME|REF|VALUE|DIV|N\/A)[!?/]*/i.test(value)) {
@@ -29,7 +29,6 @@ export default function ProyectosPage() {
     return value.trim();
   };
 
-  // Parser CSV robusto (respeta comillas y saltos de línea)
   const parseCSV = (text: string): string[][] => {
     const rows: string[][] = [];
     let currentRow: string[] = [];
@@ -86,6 +85,7 @@ export default function ProyectosPage() {
             anio: rowObj["AÑO"] || "",
             estado: (rowObj["ESTADO"] || "desconocido").toLowerCase().trim(),
             doc: rowObj["DOCUMENTACION"] || "#",
+            web: rowObj["Sitio Web"] || "", // ← usa la columna real
             rendicion: rowObj["RENDICION"] || "",
             fotos: [
               rowObj["FOTO 1"],
@@ -241,10 +241,14 @@ export default function ProyectosPage() {
                     Inversión
                   </Link>
                 )}
-                {proyecto.titulo.trim().toLowerCase() ===
-                  "jóvenes en acción por rosa blanca. cmj" && (
+                {proyecto.web && (
                   <Link
-                    href="/proyectos/jovenes-en-accion-por-rosa-blanca"
+                    href={
+                      proyecto.web.startsWith("http")
+                        ? proyecto.web
+                        : `/proyectos${proyecto.web}`
+                    }
+                    target={proyecto.web.startsWith("http") ? "_blank" : "_self"}
                     className="flex-1 text-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                   >
                     Ver Sitio
