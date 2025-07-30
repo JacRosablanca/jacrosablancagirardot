@@ -1,8 +1,8 @@
 import React from 'react'
-import '../app/globals.css'
-import Header from '@/components/header/page'
-import Nav from '@/components/nav/page'
-import Footer from '@/components/footer/page'
+import '@/styles/globals.css'
+import Header from '@/components/header'
+import Nav from '@/components/nav'
+import Footer from '@/components/footer'
 
 export const metadata = {
   title: 'Junta de Acción Comunal del Barrio de Rosa Blanca',

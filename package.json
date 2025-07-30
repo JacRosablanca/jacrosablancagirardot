@@ -1,5 +1,5 @@
 {
-  "name": "mercacomrosablanca",
+  "name": "jacrosablancagirardot",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "fs": "^0.0.1-security",
     "googleapis": "^154.0.0",
     "html2canvas": "^1.4.1",
