@@ -2,19 +2,13 @@
 
 import Image from "next/image";
 
-// Imágenes
-import Nicol from "/proyectos/cmj/nicol.jpg";
-import Kevin from "/proyectos/cmj/kevin.jpg";
-import Maria from "/proyectos/cmj/daniela.jpg";
-import Portada from "/proyectos/cmj/equipo.jpg";
-
 export default function Page() {
     return (
         <div className="max-w-5xl mx-auto py-10 px-4">
             {/* Portada */}
             <div className="w-full h-64 relative mb-8">
                 <Image
-                    src={Portada}
+                    src="/proyectos/cmj/equipo.jpg"
                     alt="Portada Jóvenes en Acción"
                     fill
                     className="object-cover rounded-lg shadow-lg"
@@ -50,7 +44,13 @@ export default function Page() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Nicol */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image src={Nicol} alt="Nicol" width={120} height={120} className="rounded-full mb-2 object-cover" />
+                    <Image
+                        src="/proyectos/cmj/nicol.jpg"
+                        alt="Nicol"
+                        width={120}
+                        height={120}
+                        className="rounded-full mb-2 object-cover"
+                    />
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
                         Nicol Valeria
                     </div>
@@ -61,7 +61,13 @@ export default function Page() {
 
                 {/* Kevin */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image src={Kevin} alt="Kevin" width={120} height={120} className="rounded-full mb-2 object-cover" />
+                    <Image
+                        src="/proyectos/cmj/kevin.jpg"
+                        alt="Kevin"
+                        width={120}
+                        height={120}
+                        className="rounded-full mb-2 object-cover"
+                    />
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
                         Kevin Vergara
                     </div>
@@ -72,7 +78,13 @@ export default function Page() {
 
                 {/* Daniela */}
                 <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image src={Maria} alt="Daniela" width={120} height={120} className="rounded-full mb-2 object-cover" />
+                    <Image
+                        src="/proyectos/cmj/daniela.jpg"
+                        alt="Daniela"
+                        width={120}
+                        height={120}
+                        className="rounded-full mb-2 object-cover"
+                    />
                     <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
                         Daniela Gaona
                     </div>
