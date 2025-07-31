@@ -1,22 +1,135 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Page() {
+    const [showModal, setShowModal] = useState(false);
+
     return (
-        <div className="max-w-5xl mx-auto py-10 px-4">
+        <div className="max-w-5xl mx-auto py-10 px-4 relative">
+
+            {/* Modal */}
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+                        <button
+                            onClick={() => setShowModal(false)}
+                            className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+                        >
+                            &times;
+                        </button>
+                        <h3 className="text-lg font-bold text-[#19295A] dark:text-blue-200 mb-4 text-center">
+                            Formulario de Registro
+                        </h3>
+                        <form
+                            className="space-y-3"
+                            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdkYJ3V0fbaEp6p0f1gwhiA09gGJqu9cOeLKUbkd8aIj0IpkQ/formResponse"
+                            method="POST"
+                            target="_blank"
+                        >
+                            <input
+                                type="email"
+                                name="entry.2005620554"
+                                placeholder="Correo electrónico"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <select
+                                name="entry.1771876615"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            >
+                                <option value="">Tipo de documento</option>
+                                <option>Tarjeta de identidad</option>
+                                <option>Cédula de ciudadanía</option>
+                            </select>
+
+                            <input
+                                type="text"
+                                name="entry.723225580"
+                                placeholder="Número de documento"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <input
+                                type="text"
+                                name="entry.1929845918"
+                                placeholder='Nombre completo "según documento"'
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <input
+                                type="text"
+                                name="entry.68529218"
+                                placeholder="Dirección de residencia"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <input
+                                type="text"
+                                name="entry.547704069"
+                                placeholder="Barrio de residencia"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <input
+                                type="date"
+                                name="entry.1091456214"
+                                placeholder="Fecha de nacimiento"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            />
+
+                            <select
+                                name="entry.1200222756"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                                required
+                            >
+                                <option value="">Nivel de estudio</option>
+                                <option>Primaria</option>
+                                <option>Bachillerato grado 6°</option>
+                                <option>Bachillerato grado 7°</option>
+                                <option>Bachillerato grado 8°</option>
+                                <option>Bachillerato grado 9°</option>
+                                <option>Bachillerato grado 10°</option>
+                                <option>Bachillerato grado 11°</option>
+                                <option>Técnico</option>
+                                <option>Tecnólogo</option>
+                                <option>Profesional</option>
+                                <option>Sin Estudios</option>
+                            </select>
+
+                            <input
+                                type="text"
+                                name="entry.808400725"
+                                placeholder="Área de estudio o profesión (si aplica)"
+                                className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
+                            />
+
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800 transition-colors"
+                            >
+                                Enviar Registro
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            )}
+
             {/* Portada */}
             <div className="w-full h-64 relative mb-8">
-                <Image
-                    src="/proyectos/cmj/equipo.jpg"
-                    alt="Portada Jóvenes en Acción"
-                    fill
-                    className="object-cover rounded-lg shadow-lg"
-                    priority
-                />
+                <Image src="/proyectos/cmj/equipo.jpg" alt="Portada Jóvenes en Acción" fill className="object-cover rounded-lg shadow-lg" priority />
             </div>
 
-            {/* Título */}
+            {/* Título y descripción */}
             <h1 className="text-3xl font-extrabold text-[#19295A] dark:text-blue-200 mb-4 text-center">
                 Jóvenes en Acción por Rosa Blanca
             </h1>
@@ -40,58 +153,35 @@ export default function Page() {
             <h2 className="text-xl font-bold text-[#19295A] dark:text-blue-200 mb-4 text-center">
                 Nuestros Candidatos
             </h2>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Nicol */}
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image
-                        src="/proyectos/cmj/nicol.jpg"
-                        alt="Nicol"
-                        width={120}
-                        height={120}
-                        className="rounded-full mb-2 object-cover"
-                    />
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
-                        Nicol Valeria
+                {[
+                    {
+                        nombre: "Nicol Valeria",
+                        edad: "14 años, estudiante",
+                        descripcion: "Ejemplo de inclusión y promotora de deportes adaptados.",
+                        img: "/proyectos/cmj/nicol.jpg",
+                    },
+                    {
+                        nombre: "Kevin Vergara",
+                        edad: "18 años, estudiante de ingeniería",
+                        descripcion: "Voz juvenil y promotor social.",
+                        img: "/proyectos/cmj/kevin.jpg",
+                    },
+                    {
+                        nombre: "Daniela Gaona",
+                        edad: "15 años, estudiante y emprendedora",
+                        descripcion: "Apoya negocios juveniles.",
+                        img: "/proyectos/cmj/daniela.jpg",
+                    },
+                ].map((cand, i) => (
+                    <div key={i} className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
+                        <Image src={cand.img} alt={cand.nombre} width={120} height={120} className="rounded-full mb-2 object-cover" />
+                        <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">{cand.nombre}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
+                            {cand.edad}. {cand.descripcion}
+                        </div>
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
-                        14 años, estudiante. Ejemplo de inclusión y promotora de deportes adaptados.
-                    </div>
-                </div>
-
-                {/* Kevin */}
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image
-                        src="/proyectos/cmj/kevin.jpg"
-                        alt="Kevin"
-                        width={120}
-                        height={120}
-                        className="rounded-full mb-2 object-cover"
-                    />
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
-                        Kevin Vergara
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
-                        18 años, estudiante de ingeniería. Voz juvenil y promotor social.
-                    </div>
-                </div>
-
-                {/* Daniela */}
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <Image
-                        src="/proyectos/cmj/daniela.jpg"
-                        alt="Daniela"
-                        width={120}
-                        height={120}
-                        className="rounded-full mb-2 object-cover"
-                    />
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200 text-center">
-                        Daniela Gaona
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">
-                        15 años, estudiante y emprendedora. Apoya negocios juveniles.
-                    </div>
-                </div>
+                ))}
             </div>
 
             {/* Mensaje final */}
@@ -101,35 +191,39 @@ export default function Page() {
 
             {/* Botón de registro */}
             <div className="mt-4 text-center">
-                <a
-                    href="https://docs.google.com/forms/u/0/d/1sf7YzDJ7Nl0D_cA5yCj9GZN_FfnlxUKrn6H_DRcW9OA/preview"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <button
+                    onClick={() => setShowModal(true)}
                     className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full font-semibold hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
                 >
                     ¡Regístrate para apoyar!
-                </a>
+                </button>
             </div>
 
             {/* Extras */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">Patrocinadores</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">Conoce a quienes apoyan esta iniciativa.</div>
-                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/patrocinadores" className="text-blue-500 hover:text-blue-700">Ver más</a>
-                </div>
-
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">Actividades</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">Entérate de los eventos y proyectos en curso.</div>
-                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/actividades" className="text-blue-500 hover:text-blue-700">Ver más</a>
-                </div>
-
-                <div className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
-                    <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">Haz tu Donación</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300 text-center">Apoya a esta causa y ayuda a que nuestros jóvenes crezcan.</div>
-                    <a href="/proyectos/jovenes-en-accion-por-rosa-blanca/donaciones" className="text-blue-500 hover:text-blue-700">Donar ahora</a>
-                </div>
+                {[
+                    {
+                        titulo: "Patrocinadores",
+                        desc: "Conoce a quienes apoyan esta iniciativa.",
+                        link: "/proyectos/jovenes-en-accion-por-rosa-blanca/patrocinadores",
+                    },
+                    {
+                        titulo: "Actividades",
+                        desc: "Entérate de los eventos y proyectos en curso.",
+                        link: "/proyectos/jovenes-en-accion-por-rosa-blanca/actividades",
+                    },
+                    {
+                        titulo: "Haz tu Donación",
+                        desc: "Apoya a esta causa y ayuda a que nuestros jóvenes crezcan.",
+                        link: "/proyectos/jovenes-en-accion-por-rosa-blanca/donaciones",
+                    },
+                ].map((extra, i) => (
+                    <div key={i} className="flex flex-col items-center bg-white dark:bg-[#23232a] rounded-lg shadow p-4 hover:scale-105 transition-transform">
+                        <div className="font-bold text-lg text-[#19295A] dark:text-blue-200">{extra.titulo}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300 text-center">{extra.desc}</div>
+                        <a href={extra.link} className="text-blue-500 hover:text-blue-700">Ver más</a>
+                    </div>
+                ))}
             </div>
         </div>
     );
