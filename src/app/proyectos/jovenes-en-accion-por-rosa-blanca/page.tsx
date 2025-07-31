@@ -24,13 +24,18 @@ export default function Page() {
                         </h3>
                         <form
                             className="space-y-3"
-                            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdkYJ3V0fbaEp6p0f1gwhiA09gGJqu9cOeLKUbkd8aIj0IpkQ/formResponse"
+                            action="https://docs.google.com/forms/u/0/d/1sf7YzDJ7Nl0D_cA5yCj9GZN_FfnlxUKrn6H_DRcW9OA/formResponse"
                             method="POST"
                             target="_blank"
+                            onSubmit={() => {
+                                setTimeout(() => {
+                                    window.location.href = "/proyectos/jovenes-en-accion-por-rosa-blanca";
+                                }, 1000); // espera 1 segundo y redirige
+                            }}
                         >
                             <input
                                 type="email"
-                                name="entry.2005620554"
+                                name="entry.2117185795"
                                 placeholder="Correo electrónico"
                                 className="w-full p-2 border rounded dark:bg-[#2a2a2a] dark:text-white"
                                 required
