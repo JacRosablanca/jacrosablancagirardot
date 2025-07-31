@@ -24,13 +24,28 @@ export default function Page() {
                         </h3>
                         <form
                             className="space-y-3"
-                            action="https://docs.google.com/forms/u/0/d/1sf7YzDJ7Nl0D_cA5yCj9GZN_FfnlxUKrn6H_DRcW9OA/formResponse"
-                            method="POST"
-                            target="_blank"
-                            onSubmit={() => {
-                                setTimeout(() => {
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+
+                                const formElement = e.target as HTMLFormElement;
+                                const data = new FormData(formElement);
+
+                                try {
+                                    await fetch(
+                                        "https://docs.google.com/forms/u/0/d/1sf7YzDJ7Nl0D_cA5yCj9GZN_FfnlxUKrn6H_DRcW9OA/formResponse",
+                                        {
+                                            method: "POST",
+                                            mode: "no-cors",
+                                            body: data,
+                                        }
+                                    );
+
+                                    // Redirección al inicio
                                     window.location.href = "/proyectos/jovenes-en-accion-por-rosa-blanca";
-                                }, 1000); // espera 1 segundo y redirige
+                                } catch (error) {
+                                    console.error("Error al enviar:", error);
+                                    alert("Hubo un problema al registrar. Intenta de nuevo.");
+                                }
                             }}
                         >
                             <input
