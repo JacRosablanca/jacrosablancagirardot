@@ -164,24 +164,11 @@ export default function Page() {
             </div>
 
             <div className="fixed bottom-6 right-6 z-40">
-                <button
-                    onClick={() => setShowModal("donacion")}
-                    className="bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition-colors text-2xl"
-                    aria-label="Haz una donación"
-                >
-                    💸
-                </button>
+                <button onClick={() => setShowModal("donacion")} className="bg-green-600 text-white p-4 rounded-full shadow-lg text-2xl">💸</button>
             </div>
-            {/* Botón flotante para el formulario de registro */}
+
             <div className="fixed bottom-6 right-20 z-40">
-                <button
-                    onClick={() => setShowModal("registro")}
-                    className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors text-2xl"
-                    aria-label="Formulario de Registro"
-                    title="Formulario de Registro"
-                >
-                    📝
-                </button>
+                <button onClick={() => setShowModal("registro")} className="bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl">📝</button>
             </div>
 
         </div>
