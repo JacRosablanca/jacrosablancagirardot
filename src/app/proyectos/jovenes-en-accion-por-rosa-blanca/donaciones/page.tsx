@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function DonacionPage({ onSuccess }: { onSuccess: () => void }) {
+export default function DonacionesPage({ onSuccess }: { onSuccess: () => void }) {
 
   const [billetera, setBilletera] = useState("Daviplata");
   const [tipoDoc, setTipoDoc] = useState("");
