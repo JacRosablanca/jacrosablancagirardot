@@ -17,8 +17,8 @@ function Page() {
       address: 'Calle Ejemplo 456, Ciudad',
       phone: '987-654-3210'
     },
-    { 
-      name: 'Negocio Ejemplo 2', 
+    {
+      name: 'Negocio Ejemplo 2',
       description: 'Apoyo a la iniciativa',
       logo: '/logo-negocio2.png', // Replace with actual logo path
       address: 'Avenida Ejemplo 789, Ciudad',

