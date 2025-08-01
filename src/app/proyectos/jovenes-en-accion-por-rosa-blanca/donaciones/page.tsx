@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-export default function DonacionPage() {
-  const router = useRouter();
+export default function DonacionPage({ onSuccess }: { onSuccess: () => void }) {
 
   const [billetera, setBilletera] = useState("Daviplata");
   const [tipoDoc, setTipoDoc] = useState("");
@@ -62,7 +60,7 @@ export default function DonacionPage() {
           window.location.href = appURL;
         }, 100); // breve pausa por compatibilidad móvil
       } else {
-        router.push("/proyectos/jovenes-en-accion-por-rosa-blanca");
+        onSuccess();
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -72,9 +70,10 @@ export default function DonacionPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6">
-      <h1 className="text-4xl font-extrabold text-center text-[#19295A] mb-6">
+      <h1 className="text-2xl font-extrabold text-center text-[#19295A] mb-6">
         Ingrese a su Billetera Virtual
       </h1>
+
 
       {/* Billetera */}
       <div className="mb-4">
