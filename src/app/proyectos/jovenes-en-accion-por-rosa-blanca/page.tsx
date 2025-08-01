@@ -163,13 +163,39 @@ export default function Page() {
                 </button>
             </div>
 
-            <div className="fixed bottom-6 right-6 z-40">
-                <button onClick={() => setShowModal("donacion")} className="bg-green-600 text-white p-4 rounded-full shadow-lg text-2xl">💸</button>
+            {/* NUEVAS SECCIONES */}
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                {/* Patrocinadores */}
+                <div className="bg-white dark:bg-[#23232a] p-6 rounded-lg shadow hover:shadow-lg transition">
+                    <h3 className="text-xl font-bold text-[#19295A] dark:text-blue-200 mb-2">Patrocinadores</h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">Conoce a quienes apoyan esta iniciativa.</p>
+                    <button className="bg-[#19295A] text-white px-4 py-2 rounded hover:bg-[#1f3168] transition-colors">
+                        Ver más
+                    </button>
+                </div>
+
+                {/* Actividades */}
+                <div className="bg-white dark:bg-[#23232a] p-6 rounded-lg shadow hover:shadow-lg transition">
+                    <h3 className="text-xl font-bold text-[#19295A] dark:text-blue-200 mb-2">Actividades</h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">Entérate de los eventos y proyectos en curso.</p>
+                    <button className="bg-[#19295A] text-white px-4 py-2 rounded hover:bg-[#1f3168] transition-colors">
+                        Ver más
+                    </button>
+                </div>
+
+                {/* Donaciones */}
+                <div className="bg-white dark:bg-[#23232a] p-6 rounded-lg shadow hover:shadow-lg transition">
+                    <h3 className="text-xl font-bold text-[#19295A] dark:text-blue-200 mb-2">Haz tu Donación</h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">Apoya a esta causa y ayuda a que nuestros jóvenes crezcan.</p>
+                    <button
+                        onClick={() => setShowModal("donacion")}
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+                    >
+                        Ver más
+                    </button>
+                </div>
             </div>
 
-            <div className="fixed bottom-6 right-20 z-40">
-                <button onClick={() => setShowModal("registro")} className="bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl">📝</button>
-            </div>
 
         </div>
     );
