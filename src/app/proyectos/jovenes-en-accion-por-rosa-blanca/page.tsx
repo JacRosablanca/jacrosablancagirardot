@@ -163,7 +163,6 @@ export default function Page() {
                 </button>
             </div>
 
-            {/* Donación */}
             <div className="fixed bottom-6 right-6 z-40">
                 <button
                     onClick={() => setShowModal("donacion")}
@@ -173,9 +172,8 @@ export default function Page() {
                     💸
                 </button>
             </div>
-
-            {/* Registro */}
-            <div className="fixed bottom-20 right-6 z-40">
+            {/* Botón flotante para el formulario de registro */}
+            <div className="fixed bottom-6 right-20 z-40">
                 <button
                     onClick={() => setShowModal("registro")}
                     className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors text-2xl"
